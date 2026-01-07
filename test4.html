@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple & Samsung AI Section</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c-width: 1200px;
+            --c-height: 600px;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #000;
+            overflow-x: hidden;
+            opacity: 0;
+        }
+        
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* LOGIKA BLOKADY SCROLLA */
+        body.lock-scroll {
+            overflow: hidden !important;
+            touch-action: none;
+        }
+
+        :root {
+            --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* --- STYLE DLA SEKCJI SAMSUNG REVEAL --- */
+        .samsung-container {
+            font-family: 'Inter', sans-serif;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .samsung-container.is-visible {
+            opacity: 1;
+        }
+
+        .word-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.1em;
+            perspective: 1200px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .floor-shadow {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0.3) translateY(20px);
+            width: 140%;
+            height: 60px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 60%);
+            filter: blur(12px);
+            opacity: 0;
+        }
+
+        .is-visible .floor-shadow {
+            animation: floorShadowReveal 2.2s var(--ease-cinematic) 1s forwards;
+        }
+
+        @keyframes floorShadowReveal {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scaleX(0.3) translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scaleX(1) translateY(0);
+            }
+        }
+
+        .letter {
+            display: inline-flex;
+            align-items: center;
+            font-size: clamp(3rem, 12vw, 8rem);
+            font-weight: 600;
+            color: #fff;
+            opacity: 0;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
+        }
+
+        .samsung-a {
+            height: 0.72em;
+            width: 0.62em;
+            fill: currentColor;
+            margin: 0 0.1em;
+        }
+
+        .is-visible .letter.from-top {
+            animation: revealFromTop 1.6s var(--ease-cinematic) forwards;
+        }
+
+        .is-visible .letter.from-bottom {
+            animation: revealFromBottom 1.6s var(--ease-cinematic) forwards;
+        }
+
+        @keyframes revealFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-120%) rotateX(-25deg);
+                filter: blur(15px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes revealFromBottom {
+            0% {
+                opacity: 0;
+                transform: translateY(120%) rotateX(25deg);
+                filter: blur(15px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+                filter: blur(0px);
+            }
+        }
+
+        /* Opóźnienia liter */
+        .is-visible .letter:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .is-visible .letter:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .is-visible .letter:nth-child(4) {
+            animation-delay: 0.45s;
+        }
+
+        .is-visible .letter:nth-child(5) {
+            animation-delay: 0.6s;
+        }
+
+        .is-visible .letter:nth-child(6) {
+            animation-delay: 0.75s;
+        }
+
+        .is-visible .letter:nth-child(7) {
+            animation-delay: 0.9s;
+        }
+
+        /* --- STYLE DLA SEKCJI WIDEO ZOOM --- */
+        .scroll-section {
+            position: relative;
+            width: 100%;
+            height: 150vh;
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* KONTENER POWIĘKSZAJĄCY SIĘ I PRZYCINAJĄCY WIDEO */
+        #video-container {
+            position: relative;
+            width: 60%;
+            height: 60vh;
+            border-radius: 60px;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        #scroll-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        #video-toggle-label {
+            display: flex;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            fill: white;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-btn .play,
+        .container-btn .pause {
+            position: absolute;
+            font-size: 24px;
+            animation: keyframes-fill 0.3s;
+        }
+
+        .container-btn .pause {
+            display: none;
+        }
+
+        .container-btn input:checked~.pause {
+            display: block;
+        }
+
+        .container-btn input:checked~.play {
+            display: none;
+        }
+
+        .container-btn input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        @keyframes keyframes-fill {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* --- NOWE STYLE DLA GALERII --- */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+
+        .gallery-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 2rem auto;
+            overflow: hidden;
+        }
+
+        .image-wrapper {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 0 10%;
+            align-items: flex-start;
+        }
+
+        .gallery-item {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 2rem;
+            background: #eee;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-item img {
+                height: 300px;
+            }
+        }
+
+        .item-caption {
+            margin-top: 16px;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-right: 10%;
+        }
+
+        .nav-btn {
+            background: #333;
+            border: 1px solid #333;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            color: whitesmoke;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #444;
+            transform: scale(1.05);
+            border-color: #444;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .nav-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        /* --- STYLE DLA DODANEJ SEKCJI GSAP --- */
+        .scrolling-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transform-origin: center center;
+            scale: 1.44;
+        }
+
+        .overlay-text {
+            position: relative;
+            z-index: 10;
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 800;
+            text-align: center;
+            color: white;
+            transform: translateY(100vh);
+            opacity: 0;
+            max-width: 80%;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            will-change: transform, opacity;
+        }
+
+        .overlay-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            overflow: hidden; /* To sprawia, że tekst znika, gdy wyjdzie poza obszar zdjęcia */
+        }
+
+        .spacer-gsap {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #475569;
+        }
+
+        #text-bundle {
+            opacity: 0;
+            transform: translateY(100vh); /* Startuje całkowicie pod ekranem/zdjęciem */
+            text-align: center;
+            will-change: transform, opacity;
+        }
+
+        /* Logika pokazywania się zdjęć */
+        .image-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .scroll-image {
+            position: absolute;
+            height: 70vh;
+            min-width: 125vw;
+            object-fit: cover;
+            opacity: 0;
+            left: 50%;
+            pointer-events: none;
+            /* Brak transition tutaj = natychmiastowy skok/reset */
+        }
+
+        .image-right {
+            z-index: 5;
+            top: 10vh;
+            transform: translateX(100%);
+        }
+
+        .image-left {
+            z-index: 10;
+            top: 50vh;
+            transform: translateX(-200%);
+        }
+
+        /* --- AKTYWACJA --- */
+        /* Gdy kontener ma klasę is-visible, dodajemy animację i pozycję docelową */
+        .is-visible .scroll-image {
+            opacity: 1;
+            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+        }
+
+        .is-visible .image-right {
+            transform: translateX(-37.5%);
+        }
+
+        .is-visible .image-left {
+            transform: translateX(-62.5%);
+        }
+    </style>
+</head>
+
+<body class="bg-black">
+    <div class="container mx-auto flex flex-col items-center py-20">
+
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
+            <h3 >AI</h3>
+            <h1 class="text-[80px] leading-tight font-semibold">Built for AI.</h1>
+            <h1 class="text-[80px] leading-tight font-semibold mb-16">From the silicon up.</h1>
+            <p class="text-2xl font-semibold text-gray-400">
+                Apple silicon, and every major subsystem that powers it, is designed for AI — creating a platform that
+                comprehensively
+                unites hardware, software, and ecosystem. So you can run demanding on-device AI workloads with
+                incredible power
+                efficiency. Always knowing that security and privacy are designed in, not just bolted on.
+            </p>
+        </div>
+
+        <div class="wrapper w-[95%] text-white grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
+            <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col">
+                <div class="p-10">
+                    <p class="text-2xl font-semibold">
+                        AI apps on Mac. Born to run. Mac is optimized to handle the world’s most advanced AI apps.
+                        Run image generation apps like DiffusionBee,
+                        LLM apps like Msty Studio and LM Studio, and video enhancement apps like Topaz Video.
+                    </p>
+                </div>
+                <img src="images/Samsung-Mobile-Galaxy-Book5-Pro-360-User-Guide-AI-PC_main11 (1)_Nero_AI_Image_Upscaler_Standard.png"
+                    class="w-full h-[450px] object-cover mt-auto">
+            </div>
+            <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col">
+                <div class="p-10">
+                    <p class="text-2xl font-semibold">
+                        AI tools in apps. Mac makes magic. Transform vocals with AI plug-ins like MicDrop for Logic Pro.
+                        And make complex image modifications in seconds with Generative Fill in Adobe Photoshop.
+                    </p>
+                </div>
+                <img src="images/Samsung-Mobile-Galaxy-Book5-Pro-360-User-Guide-AI-PC_main11_Nero_AI_Image_Upscaler_Standard.png"
+                    class="w-full h-[450px] object-cover mt-auto">
+            </div>
+        </div>
+
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32">
+            <h1
+                class="w-fit text-[56px] pb-2 font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,#1B88F6,#C65CEA,#E24A88,#EA5711)]">
+                Apple Intelligence.</h1>
+            <h1 class="text-[56px] leading-tight font-semibold mb-16">Task and you shall receive.</h1>
+            <p class="text-2xl font-semibold text-gray-400">
+                Apple Intelligence helps you write, express yourself, and get things done effortlessly. Turn a quick
+                note into a
+                polished announcement. Remove distractions from photos with Clean Up. Create unique images with new
+                ChatGPT styles in
+                Image Playground. And use intelligent actions in the Shortcuts app to create automations — like
+                comparing an audio
+                transcription to typed notes and extracting information from a PDF. Apple Intelligence is AI — for you
+                and I
+            </p>
+        </div>
+
+        <div class="wrapper w-full mb-16">
+            <img src="images/GB5Pro360-AI-FT02-FeatureBenefit-AISelect-Thumbnail-DM_Nero_AI_Image_Upscaler_Standard.png"
+                class="w-full rounded-3xl">
+        </div>
+
+        <div id="samsung-reveal-section" class="samsung-container w-full flex justify-center">
+            <div class="word-wrapper">
+                <div class="floor-shadow"></div>
+                <span class="letter from-top">S</span>
+                <span class="letter from-bottom">
+                    <svg class="samsung-a" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M40 0 L60 0 L92 100 L73 100 L50 35 L27 100 L8 100 Z" />
+                    </svg>
+                </span>
+                <span class="letter from-top">M</span>
+                <span class="letter from-bottom">S</span>
+                <span class="letter from-top">U</span>
+                <span class="letter from-bottom">N</span>
+                <span class="letter from-top">G</span>
+            </div>
+        </div>
+        <p class="text-2xl font-semibold text-gray-400 w-[65%] text-center mt-32">
+            Apple Intelligence is designed to protect your privacy at every step. It’s integrated into the core of your
+            Mac
+            through
+            on-device processing. So it’s aware of your personal information without collecting your personal
+            information. And
+            with
+            groundbreaking Private Cloud Compute, Apple Intelligence can draw on larger server-based models, running on
+            Apple
+            silicon, to handle more complex requests for you while protecting your privacy.
+        </p>
+
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64">
+            <h3 class="mb-12">Battery</h3>
+            <h1 class="text-[80px] leading-tight font-semibold">All-day battery life. <br>Think outside the outlet.</h1>
+        </div>
+
+    </div>
+
+    <div class="w-full mb-32">
+        <img src="images/noutbuk_s_windows_11-1024x576.jpg_Nero_AI_Image_Upscaler_Standard.webp"
+            class="w-full h-[60vh] md:h-screen object-cover block">
+    </div>
+    <div class="container mx-auto flex flex-col items-center py-20">
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
+            <p class="text-2xl font-semibold text-gray-400 mb-32">
+                MacBook Pro has the longest battery life ever in a Mac — up to 24 hours — and supports fast charge,
+                allowing it to
+                charge up to 50 percent in just 30 minutes.48 All models provide the same performance whether they’re
+                plugged in or
+                not,
+                so you can spend more time thinking about an outlet for your passion, not your laptop.
+            </p>
+            <div class="flex gap-10">
+                <div class="flex-1">
+                    <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 block"></span>
+                    <p class="text-[15px]">Up to</p>
+                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent">24 hours
+                    </p>
+                    <p class="text-[15px]">battery life</p>
+                </div>
+                <div class="flex-1">
+                    <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 flex"></span>
+                    <p class="text-[15px]">Up to</p>
+                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent">14 more
+                        hours</p>
+                    <p class="text-[15px]">than Intel-based MacBook Pro</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="scroll-section" id="zoom-section">
+        <div class="sticky-wrapper">
+            <div id="video-container">
+                <label class="container-btn" id="video-toggle-label">
+                    <input type="checkbox" id="video-checkbox" checked />
+                    <svg class="play" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
+                        <path
+                            d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z">
+                        </path>
+                    </svg>
+                    <svg class="pause" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                        <path
+                            d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z">
+                        </path>
+                    </svg>
+                </label>
+                <video id="scroll-video" playsinline preload="auto"
+                    poster="images/Introducing Windows 11 - 1280x720.jpg">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+    <div class="container mx-auto flex flex-col items-center py-20">
+        <div class="wrapper w-[65%] ">
+            <p class="text-2xl font-semibold text-gray-400 mb-32">
+                MacBook Pro has the longest battery life ever in a Mac — up to 24 hours — and supports fast charge,
+                allowing it to
+                charge up to 50 percent in just 30 minutes.48 All models provide the same performance whether they’re
+                plugged in or
+                not,
+                so you can spend more time thinking about an outlet for your passion, not your laptop.
+            </p>
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <div class="image-wrapper no-scrollbar imageWrapper">
+
+            <figure class="gallery-item w-[80vw] md:w-[800px]">
+                <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
+                        do najczęściej używanych aplikacji, ostatnich dokumentów oraz
+                        szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując czysty
+                        i zorganizowany punkt
+                        startowy do pracy z systemem.</p>
+                </figcaption>
+            </figure>
+
+            <figure class="gallery-item w-[60vw] md:w-[400px]">
+                <img src="images\maxresdefault.jpg" alt="Las">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
+                        rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
+                        To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w systemie.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <figure class="gallery-item w-[70vw] md:w-[600px]">
+                <img src="images\Screenshot-3.png" alt="Wodospad">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
+                        aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
+                        półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska tapeta
+                        o abstrakcyjnym
+                        kształcie fali.</p>
+                </figcaption>
+            </figure>
+
+            <figure class="gallery-item w-[50vw] md:w-[450px]">
+                <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
+                        błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
+                        Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
+                </figcaption>
+            </figure>
+
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn prevBtn" aria-label="Poprzednie" disabled>
+                <svg viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <button class="nav-btn nextBtn" aria-label="Następne">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="container mx-auto flex flex-col items-center">
+        <div class="wrapper text-white text-3xl font-medium w-[65%]">
+            <h3 class="mb-12">Battery</h3>
+            <h1 class="text-[80px] leading-tight font-semibold">All-day battery life. <br>Think outside the outlet.</h1>
+            <p class="text-2xl font-semibold text-gray-400 mt-16">
+                Mac and iPhone are incredible on their own. But when you use them together, they work wonders. Thanks to
+                Continuity, you
+                can move seamlessly across devices to share files and photos, hand off tasks, and even control your
+                iPhone from your
+                Mac.
+            </p>
+        </div>
+        <div class="image-wrapper overflow-hidden mt-12">
+            <img src="images/03_samsung_dex_multi_workspace_mo_720x668_Nero_AI_Image_Upscaler_Photo.png">
+        </div>
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32">
+            <h3 class="mb-12">Apps</h3>
+            <h1 class="text-[80px] leading-tight font-semibold">Your ambitions <br> There's an app for that</h1>
+            <p class="text-2xl font-semibold text-gray-400 mt-16">
+                Tens of thousands of apps are optimized for Apple silicon — from your go-to productivity apps to your
+                favorite games and
+                hardest-working pro apps. With MacBook Pro, they all soar.
+            </p>
+        </div>
+    </div>
+    <div id="animation-trigger" class="scrolling-section">
+        <img src="images\front-looking_Nero_AI_Image_Upscaler_Standard.png" alt="Widok natury" class="hero-image"
+            id="main-img">
+
+        <div class="overlay-container">
+            <div id="text-bundle" class="flex flex-col items-center text-white">
+                <h1 class="text-[56px] leading-tight font-semibold mb-8">Up to 1,600 nits peak HDR brightness</h1>
+                <h1 class="text-[56px] leading-tight font-semibold mb-8">1,000 nits sustained HDR brightness</h1>
+                <h1 class="text-[56px] leading-tight font-semibold mb-8">1,000,000:1 contrast ratio</h1>
+                <h1 class="text-[56px] leading-tight font-semibold mb-8">Down to 1 nit brightness in dark environments</h1>
+                <h1 class="text-[56px] leading-tight font-semibold mb-8">Up to 1,000 nits SDR brightness outdoors</h1>
+                <h1 class="text-[56px] leading-tight font-semibold">1,000,000,000 colors</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto flex flex-col items-center">
+        <div class="wrapper text-white text-3xl font-medium w-[65%]">
+            <p class="text-2xl font-semibold text-gray-400 mt-16">
+                Go from the sunniest terrace to the darkest studio with more ease than ever. The eye-popping Liquid Retina XDR display
+                offers up to 1,600 nits peak HDR brightness. And it provides up to 1,000 nits of brightness for SDR content in bright
+                light so you can see what’s on your screen more clearly outside. In low-light situations, it dims to 1 nit so you can
+                work comfortably in darker spaces.
+            </p>
+        </div>
+    </div>
+    <div class="gallery-container">
+        <div class="image-wrapper no-scrollbar imageWrapper">
+    
+            <figure class="gallery-item w-[80vw] md:w-[800px]">
+                <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
+                        do najczęściej używanych aplikacji, ostatnich dokumentów oraz
+                        szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując czysty
+                        i zorganizowany punkt
+                        startowy do pracy z systemem.</p>
+                </figcaption>
+            </figure>
+    
+            <figure class="gallery-item w-[60vw] md:w-[400px]">
+                <img src="images\maxresdefault.jpg" alt="Las">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
+                        rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
+                        To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w systemie.
+                    </p>
+                </figcaption>
+            </figure>
+    
+            <figure class="gallery-item w-[70vw] md:w-[600px]">
+                <img src="images\Screenshot-3.png" alt="Wodospad">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
+                        aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
+                        półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska tapeta
+                        o abstrakcyjnym
+                        kształcie fali.</p>
+                </figcaption>
+            </figure>
+    
+            <figure class="gallery-item w-[50vw] md:w-[450px]">
+                <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
+                <figcaption class="item-caption">
+                    <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
+                        błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
+                        Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
+                </figcaption>
+            </figure>
+    
+        </div>
+    
+        <div class="nav-controls">
+            <button class="nav-btn prevBtn" aria-label="Poprzednie" disabled>
+                <svg viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <button class="nav-btn nextBtn" aria-label="Następne">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="container mx-auto flex flex-col items-center pt-20">
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
+            <h3>Ports and Connectivity</h3>
+            <h1 class="text-[80px] leading-tight font-semibold">Make powerful <br>connections.</h1>
+            <p class="text-2xl font-semibold text-gray-400">
+                MacBook Pro packs an array of ports for connecting high-speed peripherals, driving high-resolution displays, or directly
+                offloading SDXC cards. Models with the M5 chip feature Thunderbolt 4. Models with M4 Pro or M4 Max feature Thunderbolt
+                5, which offers transfer speeds of up to 120Gb/s.51
+                <br><br>
+                MacBook Pro also supports both Wi-Fi 6E52 and Bluetooth 5.3 to connect to the internet and your wireless devices.
+            </p>
+        </div>
+    </div>
+    <div class="image-section -translate-y-[30%]" id="animation-wrapper">
+        <div id="trigger-point" class=""></div>
+    
+        <img src="left-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 1" class="scroll-image image-right">
+    
+        <img src="right-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 2" class="scroll-image image-left">
+    </div>
+    <div class="container mx-auto flex flex-col items-center -translate-y-[10%]">
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
+            <div class="flex gap-10">
+                <div class="flex-1">
+                    <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 block"></span>
+                    <p class="text-5xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent pb-10">Thunderbolt <br> HDMI <br> USB-A <br> MicroSD <br> Headphone jack</p>
+                </div>
+                <div class="flex-1">
+                    <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 flex"></span>
+                    <p class="text-3xl font-semibold text-gray-400">Drive external displays. Connect up to two high-resolution external displays with M5 and M4 Pro, or up to four
+                    high-resolution displays with M4 Max.</p>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
+            <h3>Security</h3>
+            <h1 class="text-[80px] leading-tight font-semibold">No compromises.</h1>
+        </div>
+        <div class="wrapper flex justify-center items-center h-screen -translate-y-[15%]">
+            <img src="images\SDSAC-10137-Book5-Pro_16_US_Gray_002_Top-Open_RGB-1600x1200_Nero_AI_Image_Upscaler_Photo.png"
+                class="w-full object-cover">
+        </div>
+        <div class="wrapper text-white text-xl font-medium w-[75%] mb-32">
+            <p class="text-2xl font-semibold text-gray-400 text-center">
+                <span class="text-white">Security starts with Apple silicon</span> and extends to the macOS architecture. This deep integration of hardware and software
+                along with automatic software updates helps keep MacBook Pro stable and protected for the long term. The security
+                architecture also powers features such as Touch ID, Find My, and advanced defenses that protect against viruses and
+                malware.
+            </p>
+            <div class="flex gap-10 mt-16">
+                <div class="flex-1 flex flex-col items-start text-xl">
+                    <img src="images/icons/fingerprint.png" alt="" class="icon w-16 h-16 object-cover mb-4">
+                    <p class="font-semibold text-gray-400 text-xl">Touch ID. Unlock your Mac, sign in to apps, and make secure payments with your fingertip. The Secure Enclave keeps your
+                    fingerprint data safe.</p>
+                </div>
+                <div class="flex-1 flex flex-col items-start">
+                    <img src="images/icons/apps.311.13841252692681885.82e4c6e4-17fa-46ed-96a8-3bc6ee0872ef.png" alt="" class="icon w-16 h-16 object-cover mb-4">
+                    <p class="font-semibold text-gray-400">
+                        Find My. Locate your misplaced MacBook Pro and remotely lock or erase it if needed.
+                    </p>
+                </div>
+                <div class="flex-1 flex flex-col items-start">
+                    <svg class="text-white w-16 h-16 object-cover mb-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                        y="0px" width="100%" viewBox="0 0 534 601" xml:space="preserve">
+                        <path fill="currentColor" stroke="none" d="
+                    M535.000000,84.000000 
+                    	C535.000000,118.687561 535.000000,153.375122 534.672546,188.845322 
+                    	C521.783447,185.737686 509.244324,181.771851 496.645386,178.006226 
+                    	C493.162354,176.965179 491.839172,175.290314 491.894928,171.447525 
+                    	C492.138947,154.620605 491.916718,137.787338 492.074249,120.958344 
+                    	C492.103760,117.806679 491.268494,116.365761 488.105408,115.470596 
+                    	C480.556244,113.334137 473.165375,110.645088 465.669434,108.311287 
+                    	C461.615021,107.048965 457.476227,106.057732 452.975372,104.835564 
+                    	C452.975372,124.854050 452.975372,144.315826 452.975372,164.161743 
+                    	C428.294830,156.455750 403.997894,148.829773 379.674286,141.289795 
+                    	C364.974457,136.733017 350.246460,132.265518 335.505096,127.844711 
+                    	C328.026062,125.601822 328.000000,125.688736 328.000000,117.541626 
+                    	C328.000000,109.209709 328.000000,100.877800 328.000000,92.545883 
+                    	C328.000000,83.411720 328.000000,74.277557 328.000000,65.600365 
+                    	C311.734436,60.507198 295.988922,55.502789 280.189087,50.676144 
+                    	C275.640594,49.286636 270.946594,47.616070 266.298889,47.551823 
+                    	C262.671417,47.501671 259.033997,49.808769 255.363602,50.947742 
+                    	C239.635864,55.828266 223.894287,60.664143 208.000000,65.564919 
+                    	C208.000000,84.091187 207.919464,102.577179 208.077194,121.061134 
+                    	C208.104324,124.238129 207.186523,125.589195 204.089371,126.531738 
+                    	C179.860855,133.905121 155.691788,141.474152 131.511124,149.004532 
+                    	C115.461815,154.002670 99.423630,159.036514 82.831772,164.225998 
+                    	C82.831772,144.220825 82.831772,124.666931 82.831772,104.702309 
+                    	C70.200935,108.587730 58.093597,112.262703 46.044353,116.119179 
+                    	C45.149830,116.405487 44.078415,118.001602 44.088795,118.978172 
+                    	C44.304008,139.228470 44.255276,159.494873 45.128727,179.720535 
+                    	C45.792015,195.079590 47.520939,210.400986 49.070698,225.709274 
+                    	C49.694981,231.875931 51.106194,237.962936 52.182533,244.221420 
+                    	C61.168808,241.566193 69.499825,239.209274 77.765770,236.642792 
+                    	C104.096321,228.467407 130.387054,220.163696 156.722427,212.003983 
+                    	C188.112061,202.278229 219.594147,192.845215 250.901947,182.864334 
+                    	C260.664764,179.751968 269.732635,177.250397 280.227112,180.832901 
+                    	C302.823822,188.546753 325.802856,195.137756 348.605225,202.252991 
+                    	C374.924652,210.465683 401.212189,218.780579 427.532135,226.991608 
+                    	C458.595825,236.682556 489.623840,246.496719 520.813171,255.766861 
+                    	C525.588501,257.186218 525.658936,259.854309 524.872803,262.868195 
+                    	C521.146851,277.153595 517.228455,291.394836 513.052368,305.555603 
+                    	C504.438202,334.766083 491.635284,362.243378 478.006500,389.373108 
+                    	C476.586456,392.199860 474.786621,392.435150 472.137634,391.625427 
+                    	C461.252899,388.298431 450.313110,385.150024 439.446198,381.766815 
+                    	C411.133148,372.952118 382.856812,364.019623 354.548798,355.188568 
+                    	C328.995300,347.216827 303.379730,339.441101 277.879883,331.302124 
+                    	C271.143738,329.152069 264.867432,329.148743 258.145142,331.298126 
+                    	C231.885391,339.694305 205.542557,347.831543 179.211349,356.002930 
+                    	C153.931168,363.848145 128.627151,371.616486 103.056190,379.504181 
+                    	C104.801712,382.392334 106.292915,385.073486 107.984070,387.621918 
+                    	C116.535629,400.508423 125.104225,413.384094 133.759811,426.200745 
+                    	C135.162003,428.277069 136.818253,429.282593 139.876648,428.115845 
+                    	C147.050323,425.379181 154.467697,423.272400 161.812515,420.994781 
+                    	C194.118637,410.976807 226.420731,400.945251 258.764435,391.049805 
+                    	C262.408508,389.934906 266.652588,388.325165 270.026947,389.207367 
+                    	C285.064575,393.138763 299.921082,397.782837 314.780273,402.372528 
+                    	C343.264343,411.170624 371.712982,420.083679 400.161621,428.995941 
+                    	C412.706635,432.926025 425.186798,437.064941 437.753418,440.923401 
+                    	C444.006897,442.843536 444.513641,444.413666 440.172089,449.360718 
+                    	C436.727509,453.285675 433.528351,457.424866 430.169525,461.426392 
+                    	C419.774170,473.811066 410.078186,486.886932 398.775177,498.381226 
+                    	C381.742126,515.702515 363.961792,532.345276 345.761810,548.442871 
+                    	C333.757935,559.060120 320.763824,568.645020 307.652039,577.897034 
+                    	C295.488464,586.479980 282.580292,594.007629 270.000000,602.000000 
+                    	C267.958344,602.000000 265.916656,602.000000 263.436035,601.632935 
+                    	C261.498688,599.891296 260.163849,598.256592 258.470612,597.192017 
+                    	C253.851028,594.287415 248.836426,591.964722 244.412277,588.804016 
+                    	C227.169647,576.485596 209.956482,564.115967 193.026627,551.374329 
+                    	C186.296555,546.309265 180.332581,540.226257 173.499664,534.143677 
+                    	C187.324585,529.933105 200.353973,525.973999 213.376938,521.993958 
+                    	C218.537979,520.416687 222.560104,518.196350 228.416611,523.290405 
+                    	C240.677353,533.954895 254.521896,542.798645 267.504364,552.236267 
+                    	C305.921692,527.765320 339.165192,498.129578 369.805542,465.310516 
+                    	C359.897858,462.228210 350.254669,459.241455 340.619812,456.228119 
+                    	C318.281281,449.241608 295.988464,442.102570 273.566498,435.395203 
+                    	C270.107971,434.360596 265.793884,434.394684 262.332550,435.443329 
+                    	C233.798172,444.087921 205.373169,453.093384 176.912064,461.980042 
+                    	C159.313797,467.474884 141.696854,472.910553 124.123978,478.485321 
+                    	C121.499794,479.317749 119.890976,479.174713 118.027557,476.728851 
+                    	C112.401344,469.344086 106.081169,462.479340 100.591530,455.000763 
+                    	C81.501534,428.994659 64.110527,401.917328 49.974617,372.844208 
+                    	C46.891251,366.502716 43.673222,360.226685 40.402855,353.691986 
+                    	C42.114487,352.979889 43.257370,352.388245 44.467987,352.018250 
+                    	C61.181103,346.910034 77.927917,341.910858 94.618484,336.730377 
+                    	C127.231293,326.607941 159.815826,316.394440 192.408463,306.207062 
+                    	C214.749191,299.224030 237.097183,292.263672 259.412384,285.199890 
+                    	C265.403046,283.303589 271.085938,283.539948 277.126221,285.461243 
+                    	C299.584808,292.604889 322.178314,299.322876 344.688019,306.307556 
+                    	C373.165710,315.144073 401.609375,324.090149 430.071320,332.977478 
+                    	C437.840424,335.403442 445.622375,337.788147 453.364838,340.181366 
+                    	C453.924927,338.770874 454.347504,337.751373 454.736938,336.719360 
+                    	C460.503448,321.438019 466.177551,306.120789 472.102722,290.901276 
+                    	C473.289001,287.854187 473.197205,286.873260 469.682739,285.834991 
+                    	C456.161011,281.840363 442.823883,277.226227 429.349030,273.066345 
+                    	C406.058990,265.876373 382.695740,258.923523 359.403381,251.740936 
+                    	C332.745514,243.520523 306.145203,235.113297 279.484314,226.902908 
+                    	C275.214630,225.588043 270.300751,223.160172 266.467529,224.182419 
+                    	C248.977631,228.846649 231.780075,234.600998 214.452438,239.881485 
+                    	C196.505157,245.350815 178.495453,250.617111 160.573303,256.166748 
+                    	C132.240829,264.939911 103.966316,273.900085 75.652344,282.733307 
+                    	C57.276825,288.466003 38.874752,294.113586 20.340540,299.843842 
+                    	C17.716780,288.843079 15.060448,277.926331 12.514583,266.983917 
+                    	C7.762061,246.557007 4.436915,225.908890 2.925945,204.973648 
+                    	C2.827516,203.609863 1.666657,202.322769 1.000000,201.000000 
+                    	C1.000000,200.555557 1.000000,200.111099 1.393472,199.186966 
+                    	C1.524630,195.804855 1.262316,192.902420 1.000000,190.000000 
+                    	C1.000000,154.979111 1.000000,119.958214 1.403611,84.468544 
+                    	C43.042145,71.236641 84.277069,58.473507 126.201599,45.496929 
+                    	C126.201599,65.846222 126.201599,85.355545 126.201599,105.065475 
+                    	C138.155090,101.275795 149.535187,97.437263 161.073837,94.156502 
+                    	C164.347702,93.225655 165.076080,91.892960 165.057037,88.826897 
+                    	C164.942261,70.358864 165.000000,51.889755 165.000000,33.311581 
+                    	C189.039276,25.829842 212.895447,18.459839 236.712875,10.966603 
+                    	C246.850372,7.777232 256.906738,4.330031 267.000000,0.999999 
+                    	C267.444458,1.000000 267.888885,1.000000 268.786316,1.371778 
+                    	C303.473450,12.329799 337.707642,22.916042 372.000000,33.520283 
+                    	C372.000000,48.379356 371.955200,63.031757 372.024384,77.683624 
+                    	C372.048523,82.795937 370.659912,89.007263 373.047485,92.683014 
+                    	C375.091461,95.829857 381.590576,96.130066 386.152985,97.583443 
+                    	C393.981384,100.077202 401.836060,102.488449 410.116028,105.070389 
+                    	C410.116028,85.038368 410.116028,65.591072 410.116028,45.905922 
+                    	C412.498138,46.395210 414.596008,46.637447 416.573914,47.260532 
+                    	C448.972748,57.466976 481.345123,67.757538 513.752441,77.936752 
+                    	C520.776794,80.143105 527.914490,81.988403 535.000000,84.000000 
+                    z" />
+                    </svg>
+                    <p class="font-semibold text-gray-400">
+                        FileVault. Encrypt and protect your files and data without having to think about it.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper text-white text-3xl font-medium w-[75%]">
+            <h1 class="text-[86px] leading-tight font-semibold text-center">There’s never been a better time to upgrade.</h1>
+            <h3 class="text-3xl text-gray-400 mt-16">Here's what you can get with the new <span class="text-white">14-inch MacBook Pro with M5</span></h3>
+        </div>
+        <div class="wrapper text-white text-3xl font-medium w-[90%] flex items-center justify-center mt-12">
+            <div style="width: var(--c-width); height: var(--c-height);" class="gap-5 max-w-[95vw] flex">
+            
+                <div class="flex-1 flex flex-col gap-5">
+                    <div class="h-[60%] w-full bg-[url('images/upgraders_intel_1__c2uwtldp88mu_large.jpg')] bg-cover bg-center rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10">
+                        <img src="images/icon_sparkles__crqv6fji0x26_large.png" alt="sparkles">
+                        <h3 class="text-5xl text-white">7x faster than i7-920 in all tasks.</h3>
+                    </div>
+                    <div class="h-[40%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex items-center justify-start pl-10 gap-10">
+                        <img src="images/icon_xdr_display__yb78ajay2qaa_large.png" alt="sun" class="scale-125">
+                        <h3 class="text-4xl text-white font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif] max-w-[45%]">A stunning Liquid Retina XDR display.</h3>
+                    </div>
+                </div>
+            
+                <div class="flex-1 flex flex-col gap-5">
+                    <div class="h-[40%] w-full bg-gray-900 rounded-[32px] shadow-xl flex items-center justify-start pl-10">
+                        <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp" alt="galaxy ai" class="w-48 h-48 object-cover">
+                        <h3 class="text-4xl text-gray-400 font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif]">Galaxy AI</h3>
+                    </div>
+                    <div class="h-[60%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10">
+                        <img src="images/icon_battery_life__erphl3wwf0sy_large.png" alt="sparkles">
+                        <h3 class="text-5xl text-white">Up to <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#36AA87] to-[#6DD400]">7 more hours</span> battery life. <span class="text-gray-400">(Up to 15 hours total.)</span></h3>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+<script>
+    // 1. REJESTRACJA GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Zapamiętujemy pozycję scrolla przed odświeżeniem ręcznie
+        const lastScrollY = sessionStorage.getItem('lastScrollPos') || 0;
+
+        // Elementy
+        const video = document.getElementById('scroll-video');
+        const videoContainer = document.getElementById('video-container');
+        const zoomSection = document.getElementById('zoom-section');
+        const videoCheckbox = document.getElementById('video-checkbox');
+        const body = document.body;
+        const trigger = document.querySelector('#trigger-point');
+        const wrapper = document.querySelector('#animation-wrapper');
+
+        // --- LOGIKA WIDEO ---
+        let hasBeenPlayed = localStorage.getItem('videoWatched') === 'true';
+        let videoStarted = false;
+
+        // NOWOŚĆ: Logika sterowania przyciskiem i odblokowywania scrolla
+        if (videoCheckbox) {
+            videoCheckbox.addEventListener('change', () => {
+                if (videoCheckbox.checked) {
+                    // Checkbox zaznaczony = Pauza/Stop
+                    video.pause();
+                    body.classList.remove('lock-scroll');
+                } else {
+                    // Checkbox odznaczony = Play
+                    // Blokujemy scroll tylko jeśli film nie został jeszcze "zaliczony"
+                    if (!hasBeenPlayed) {
+                        video.play();
+                        body.classList.add('lock-scroll');
+                    } else {
+                        video.play();
+                    }
+                }
+            });
+        }
+
+        function checkInitialState() {
+            if (!zoomSection) return;
+            const rect = zoomSection.getBoundingClientRect();
+            if (rect.bottom <= 0 || hasBeenPlayed) {
+                hasBeenPlayed = true;
+                videoStarted = true;
+                body.classList.remove('lock-scroll');
+                if (video) {
+                    video.muted = true;
+                    video.loop = true;
+                    video.play().catch(() => { });
+                }
+            }
+        }
+
+        // --- GŁÓWNA INICJALIZACJA ---
+        window.addEventListener('load', () => {
+            initGalleries();
+
+            // 2. KONFIGURACJA ANIMACJI PIN
+            if (document.getElementById('animation-trigger')) {
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#animation-trigger",
+                        start: "top top",
+                        end: "+=300%",
+                        scrub: 1,
+                        pin: true,
+                        anticipatePin: 1
+                    }
+                })
+                    .to("#text-bundle", { y: "0", opacity: 1, duration: 2 })
+                    .to("#text-bundle", { y: "-100vh", opacity: 0, duration: 2 })
+                    .to("#main-img", { scale: 0.85, borderRadius: "40px", duration: 1.5 });
+            }
+
+            ScrollTrigger.refresh();
+
+            if (lastScrollY > 0) {
+                window.scrollTo(0, lastScrollY);
+            }
+
+            body.classList.add('loaded');
+            checkInitialState();
+        });
+
+        // Zapamiętywanie pozycji scrolla i logika zoomowania
+        window.addEventListener('scroll', () => {
+            sessionStorage.setItem('lastScrollPos', window.scrollY);
+
+            if (zoomSection) {
+                const rect = zoomSection.getBoundingClientRect();
+                const windowH = window.innerHeight;
+
+                if (rect.top < windowH && rect.bottom > 0) {
+                    let progress = Math.min(Math.max((windowH - rect.top) / windowH, 0), 1);
+
+                    if (videoContainer) {
+                        videoContainer.style.width = `${60 + (40 * progress)}%`;
+                        videoContainer.style.height = `${60 + (40 * progress)}vh`;
+                        videoContainer.style.borderRadius = `${60 * (1 - progress)}px`;
+                    }
+
+                    // Aktywacja blokady przy pełnym zbliżeniu
+                    if (progress >= 1 && !videoStarted && !hasBeenPlayed) {
+                        videoStarted = true;
+                        body.classList.add('lock-scroll');
+
+                        // Synchronizacja przycisku: odznaczamy checkbox, aby pokazać ikonę PAUZY
+                        if (videoCheckbox) videoCheckbox.checked = false;
+
+                        if (video) {
+                            video.muted = false;
+                            video.onended = () => {
+                                hasBeenPlayed = true;
+                                localStorage.setItem('videoWatched', 'true');
+                                body.classList.remove('lock-scroll');
+                                // Po zakończeniu zaznaczamy checkbox (ikona Play)
+                                if (videoCheckbox) videoCheckbox.checked = true;
+                                window.scrollBy({ top: 150, behavior: 'smooth' });
+                            };
+                            video.play();
+                        }
+                    }
+                }
+            }
+        });
+
+        function initGalleries() {
+            document.querySelectorAll('.gallery-container').forEach(gallery => {
+                const wrapper = gallery.querySelector('.imageWrapper');
+                const btns = [gallery.querySelector('.prevBtn'), gallery.querySelector('.nextBtn')];
+                if (wrapper && btns[0] && btns[1]) {
+                    btns[1].onclick = () => wrapper.scrollBy({ left: 600, behavior: 'smooth' });
+                    btns[0].onclick = () => wrapper.scrollBy({ left: -600, behavior: 'smooth' });
+                }
+            });
+        }
+            document.addEventListener('DOMContentLoaded', () => {
+                const wrapper = document.querySelector('#animation-wrapper');
+
+                const observerOptions = {
+                    root: null,
+                    rootMargin: "0px 0px -40% 0px",
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Wchodzi w pole widzenia (powyżej 60% od dołu)
+                            wrapper.classList.add('is-visible');
+                        } else {
+
+                            if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) {
+                                wrapper.classList.remove('is-visible');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                observer.observe(wrapper);
+            });
+
+        // Samsung Reveal Observer
+        const samsungObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+        }, { threshold: 0.5 });
+
+        if (document.getElementById('samsung-reveal-section')) {
+            samsungObserver.observe(document.getElementById('samsung-reveal-section'));
+        }
+</script>
+</body>
+
+</html>

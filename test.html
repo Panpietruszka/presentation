@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamiczna Sekcja Hero - Optimized</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --switch-speed: 0.6s;
+            --pill-speed: 0.6s;
+            --fast-bezier: cubic-bezier(0.2, 1, 0.2, 1);
+            --item-height-collapsed: 54px;
+            --gap: 12px;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Tło */
+        .bg-layer {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            /* Optymalizacja GPU */
+            will-change: transform, opacity;
+            transition: transform var(--switch-speed) var(--fast-bezier),
+                opacity var(--switch-speed) var(--fast-bezier),
+                filter var(--switch-speed) var(--fast-bezier);
+            opacity: 0;
+        }
+
+        .navigation-overlay {
+            position: absolute;
+            top: 50%;
+            left: 8%;
+            transform: translateY(-50%);
+            z-index: 100;
+            width: 440px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            opacity: 0;
+            animation: fadeIn 0.5s var(--fast-bezier) forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(-50%);
+            }
+        }
+
+        .menu-pill {
+            position: absolute;
+            cursor: pointer;
+            border-radius: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 160px;
+            height: var(--item-height-collapsed);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            /* Optymalizacja kluczowych właściwości */
+            will-change: transform, width, height;
+            transition: transform var(--pill-speed) var(--fast-bezier),
+                width var(--pill-speed) var(--fast-bezier),
+                height var(--pill-speed) var(--fast-bezier),
+                background 0.2s ease,
+                border-color 0.2s ease;
+            display: flex;
+        }
+
+        .menu-pill.is-active {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.4);
+            width: 400px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .pill-content {
+            width: 400px;
+            padding: 1rem 1.4rem;
+            pointer-events: none;
+            text-align: left;
+        }
+
+        .item-label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: font-size var(--pill-speed) var(--fast-bezier);
+        }
+
+        .menu-pill.is-active .item-label {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details {
+            opacity: 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.6);
+            transform: translateY(8px);
+            transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s;
+        }
+
+        .menu-pill.is-active .item-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .close-trigger {
+            position: absolute;
+            top: calc(5% + 1.5%);
+            right: calc(5% + 1.5%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            cursor: pointer;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s var(--fast-bezier);
+            pointer-events: none;
+        }
+
+        .close-trigger.is-visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .layer-depth-enter {
+            transform: translate(-50%, -50%) scale(1.05);
+            filter: blur(10px);
+        }
+
+        .layer-depth-exit {
+            transform: translate(-50%, -50%) scale(0.95);
+            filter: blur(20px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app-shell">
+        <section class="hero-viewport relative h-screen w-full flex items-center">
+            <div id="close-btn" class="close-trigger">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+
+            <div id="layers-engine"></div>
+
+            <div
+                class="absolute w-[90%] h-[90%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-black/50 to-transparent rounded-[20px] z-[5] pointer-events-none">
+            </div>
+
+            <nav class="navigation-overlay" id="main-nav">
+                <div class="menu-pill"
+                    data-img="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2400&q=100">
+                    <div class="pill-content">
+                        <span class="item-label">Góry</span>
+                        <p class="item-details">Potężne szczyty skąpane w mgle.</p>
+                    </div>
+                </div>
+                <div class="menu-pill"
+                    data-img="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=100">
+                    <div class="pill-content">
+                        <span class="item-label">Las</span>
+                        <p class="item-details">Cisza prastarych drzew.</p>
+                    </div>
+                </div>
+                <div class="menu-pill"
+                    data-img="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=100">
+                    <div class="pill-content">
+                        <span class="item-label">Plaża</span>
+                        <p class="item-details">Złoty piasek i horyzont.</p>
+                    </div>
+                </div>
+            </nav>
+        </section>
+    </div>
+
+    <script>
+        const navItems = document.querySelectorAll('.menu-pill');
+        const layersEngine = document.getElementById('layers-engine');
+        const closeBtn = document.getElementById('close-btn');
+        const cosmicUrl = "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2400&q=100";
+
+        let currentActiveLayer = null;
+
+        // Wstępne ładowanie obrazów (Preloading), aby uniknąć lagów dekodowania
+        function preloadImages() {
+            const images = [cosmicUrl];
+            navItems.forEach(item => images.push(item.dataset.img));
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+
+        function updateLayout() {
+            let totalHeight = 0;
+            navItems.forEach(pill => {
+                totalHeight += (pill.classList.contains('is-active') ? 200 : 54) + 12;
+            });
+            totalHeight -= 12;
+
+            let currentY = -totalHeight / 2;
+
+            navItems.forEach((pill) => {
+                const isActive = pill.classList.contains('is-active');
+                // Używamy translate3d dla wymuszenia akceleracji sprzętowej
+                pill.style.transform = `translate3d(0px, ${currentY}px, 0px)`;
+                currentY += (isActive ? 200 : 54) + 12;
+            });
+        }
+
+        function createBg(url) {
+            const div = document.createElement('div');
+            div.className = 'bg-layer';
+            div.style.backgroundImage = `url('${url}')`;
+            return div;
+        }
+
+        function switchBg(url, isReset = false) {
+            const next = createBg(url);
+            next.classList.add(isReset ? 'layer-depth-exit' : 'layer-depth-enter');
+            next.style.zIndex = "10";
+            layersEngine.appendChild(next);
+
+            // Wymuszenie reflow w sposób nieblokujący
+            void next.offsetWidth;
+
+            requestAnimationFrame(() => {
+                next.style.transform = 'translate3d(-50%, -50%, 0px) scale(1)';
+                next.style.opacity = '1';
+                next.style.filter = 'blur(0px)';
+
+                if (currentActiveLayer) {
+                    currentActiveLayer.style.opacity = '0';
+                    currentActiveLayer.style.transform = isReset ?
+                        'translate3d(-50%, -50%, 0px) scale(1.05)' :
+                        'translate3d(-50%, -50%, 0px) scale(0.95)';
+                }
+            });
+
+            setTimeout(() => {
+                if (currentActiveLayer) currentActiveLayer.remove();
+                currentActiveLayer = next;
+            }, 650);
+        }
+
+        window.onload = () => {
+            preloadImages();
+            currentActiveLayer = createBg(cosmicUrl);
+            currentActiveLayer.style.opacity = '1';
+            currentActiveLayer.style.transform = 'translate3d(-50%, -50%, 0px)';
+            layersEngine.appendChild(currentActiveLayer);
+            updateLayout();
+        };
+
+        navItems.forEach(pill => {
+            pill.addEventListener('click', () => {
+                if (pill.classList.contains('is-active')) return;
+                navItems.forEach(p => p.classList.remove('is-active'));
+                pill.classList.add('is-active');
+                closeBtn.classList.add('is-visible');
+                updateLayout();
+                switchBg(pill.dataset.img);
+            });
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            navItems.forEach(p => p.classList.remove('is-active'));
+            closeBtn.classList.remove('is-visible');
+            updateLayout();
+            switchBg(cosmicUrl, true);
+        });
+
+        window.addEventListener('resize', updateLayout);
+    </script>
+</body>
+
+</html>

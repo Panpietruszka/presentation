@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel Lunar Lake - Precision Spacing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+            font-family: sans-serif;
+        }
+
+        .scroll-container {
+            height: 250vh;
+        }
+
+        .sticky-element {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Stała przestrzeń na bloki tekstu */
+        .text-fixed-height {
+            position: relative;
+            height: 350px;
+            width: 400px;
+        }
+
+        .text-fixed-height p {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            margin: 0;
+            will-change: opacity, transform;
+        }
+
+        #normal-text {
+            top: 0;
+        }
+
+        #gradient-text {
+            /* Duży odstęp między białym tekstem a gradientem */
+            top: 120px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="flex flex-col items-center py-20">
+        <div class="image">
+            <img src="images/front-looking_Nero_AI_Image_Upscaler_Standard.png" alt="front-looking" class="">
+        </div>
+        <p class="text-center max-w-[1200px] mb-20 mt-8 text-2xl text-gray-500 px-4">
+            Run graphics-intensive workflows with responsiveness that keeps up with your imagination. M5 features a GPU with
+            enhanced shader cores and a third-generation ray‑tracing engine, so gaming feels more immersive and realistic. And
+            Dynamic Caching optimizes on-chip memory to significantly increase GPU utilization — driving huge performance boosts for
+            pro apps and games.
+        </p>
+    </div>
+
+    <div class="scroll-container">
+        <div class="sticky-element">
+            <div class="lunar-lake-book flex w-full items-center justify-center px-20">
+
+                <div class="image-container relative w-2/3">
+                    <div class="relative -translate-x-[20%]">
+                        <img src="images/front-looking_Nero_AI_Image_Upscaler_Standard.png" alt="laptop"
+                            class="max-w-none w-[1100px]">
+                    </div>
+                </div>
+
+                <div class="right-section w-1/3">
+                    <img src="images/19_intel_arrow_lake_lunar_lake_i_panther_lake_nowe_informacje_o_procesorach_intel_core_ultra_dla_pc_0_b_Nero_AI_Image_Upscaler_Standard_Face.png"
+                        alt="intel" class="w-[200px] h-[200px] object-contain mb-2">
+
+                    <div class="text-fixed-height">
+                        <p id="normal-text" class="text-left text-3xl text-white font-bold leading-tight">
+                            M5 brings next-generation speed.
+                        </p>
+                        <p id="gradient-text"
+                            class="text-left text-3xl font-bold bg-gradient-to-r from-[#E1F4EE] to-[#47677F] bg-clip-text text-transparent leading-tight">
+                            Available in 14” Up to 6x faster than M1
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-[50vh]"></div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const contentData = [
+            {
+                normal: "M5 brings next-generation speed and powerful on-device AI.",
+                gradient: "Available in 14” Up to 6x faster than M1"
+            },
+            {
+                normal: "Zupełnie nowa architektura procesora Lunar Lake.",
+                gradient: "Wydajność spotyka energooszczędność."
+            },
+            {
+                normal: "Grafika Intel Arc w nowym wydaniu.",
+                gradient: "Graj w 4K gdziekolwiek jesteś."
+            }
+        ];
+
+        const normalEl = document.getElementById('normal-text');
+        const gradientEl = document.getElementById('gradient-text');
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".scroll-container",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.2,
+            }
+        });
+
+        normalEl.innerText = contentData[0].normal;
+        gradientEl.innerText = contentData[0].gradient;
+
+        for (let i = 1; i < contentData.length; i++) {
+            // Animacja Gradientu
+            tl.to(gradientEl, {
+                opacity: 0,
+                y: -10,
+                duration: 0.4,
+                ease: "power2.inOut"
+            });
+
+            tl.set(gradientEl, { innerText: contentData[i].gradient, y: 10 });
+
+            // Animacja Białego tekstu
+            tl.to(normalEl, {
+                opacity: 0,
+                y: -10,
+                duration: 0.4,
+                ease: "power2.inOut"
+            }, "-=0.2");
+
+            tl.to(gradientEl, {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: "power2.out"
+            }, "-=0.1");
+
+            tl.set(normalEl, { innerText: contentData[i].normal, y: 10 });
+
+            tl.to(normalEl, {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+
+            tl.to({}, { duration: 0.3 });
+        }
+    </script>
+</body>
+
+</html>

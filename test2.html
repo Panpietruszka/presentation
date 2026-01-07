@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Style Scroll Reveal - M5 Persistent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .scroll-container {
+            height: 1400vh;
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transform: scale(1.2);
+        }
+
+        .mask-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            shape-rendering: geometricPrecision;
+            text-rendering: geometricPrecision;
+        }
+
+        .info-overlay {
+            position: absolute;
+            z-index: 20;
+            color: white;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .info-bottom {
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .info-right {
+            right: 2%;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: right;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 10px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #E1F4EE, #47677F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 1024px) {
+            .info-right {
+                right: 5%;
+                max-width: 400px;
+            }
+        }
+
+        .content-section {
+            height: 100vh;
+            background: #000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scroll-container">
+        <div class="sticky-wrapper" id="mainSticky">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2560&q=80"
+                alt="Background" class="background-image">
+
+            <div id="infoBottom" class="info-overlay info-bottom">
+                <p class="text-gray-300 text-lg">NA powerful Neural Accelerator is built into each GPU core of the M5 chip, which dramatically speeds up AI tasks like
+                image generation from diffusion models and large language model (LLM) prompt processing. The 16-core Neural Engine
+                drives Apple Intelligence features, making on-device AI powerful and energy efficient.</p>
+            </div>
+
+            <div id="infoRight" class="info-overlay info-right">
+                <h3 id="headerRight" class="text-4xl font-bold gradient-text text-left">Up to 6x faster AI performance than M1^</h3>
+            </div>
+
+            <div class="mask-container">
+                <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="chipMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#2a2a2c" />
+                            <stop offset="30%" style="stop-color:#4a4a4d" />
+                            <stop offset="50%" style="stop-color:#1a1a1c" />
+                            <stop offset="70%" style="stop-color:#3a3a3d" />
+                            <stop offset="100%" style="stop-color:#0f0f10" />
+                        </linearGradient>
+
+                        <linearGradient id="shineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0" />
+                            <stop offset="50%" stop-color="white" stop-opacity="0.15" id="shineStop" />
+                            <stop offset="100%" stop-color="white" stop-opacity="0" />
+                        </linearGradient>
+
+                        <linearGradient id="m5TextGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffffff" />
+                            <stop offset="100%" style="stop-color:#a0a0a0" />
+                        </linearGradient>
+
+                        <pattern id="circuitPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M0 20 L40 20 M20 0 L20 40" stroke="white" stroke-width="0.2" fill="none"
+                                id="circuitPath" />
+                        </pattern>
+
+                        <mask id="textMask">
+                            <rect x="0" y="0" width="1000" height="1000" fill="white" />
+                            <text x="500" y="500" id="animatedText" text-anchor="middle" alignment-baseline="middle"
+                                fill="black" font-family="system-ui, -apple-system, sans-serif" font-weight="900"
+                                style="letter-spacing: -0.02em;">SAMSUNG</text>
+
+                            <g id="m5Group" opacity="0">
+                                <rect x="350" y="350" width="300" height="300" rx="45" fill="black" />
+                            </g>
+                        </mask>
+                    </defs>
+
+                    <rect x="0" y="0" width="1000" height="1000" fill="black" mask="url(#textMask)" />
+
+                    <g id="m5Visual" opacity="0" pointer-events="none">
+                        <rect x="348" y="348" width="304" height="304" rx="47" fill="#444" id="m5Border" />
+                        <rect x="350" y="350" width="300" height="300" rx="45" fill="url(#chipMetal)" />
+                        <rect x="360" y="360" width="280" height="280" rx="35" fill="url(#circuitPattern)"
+                            id="m5Circuit" opacity="0.4" />
+                        <rect x="350" y="350" width="300" height="300" rx="45" fill="url(#shineGradient)"
+                            id="m5Shine" />
+
+                        <text x="500" y="490" id="m5Label" text-anchor="middle" alignment-baseline="middle"
+                            fill="url(#m5TextGradient)" font-family="system-ui, -apple-system, sans-serif"
+                            font-weight="800" font-size="110"
+                            style="filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.6));">M5</text>
+
+                        <text x="500" y="545" text-anchor="middle" alignment-baseline="middle" fill="#888"
+                            font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="16"
+                            style="letter-spacing: 0.3em; text-transform: uppercase;">Ultra</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2 class="text-6xl font-bold italic tracking-tighter text-white">PROCESOR M5</h2>
+        <p class="mt-4 text-gray-400 text-2xl uppercase tracking-widest">Zawsze w centrum uwagi.</p>
+    </div>
+
+    <script>
+        const animatedText = document.getElementById('animatedText');
+        const m5Group = document.getElementById('m5Group');
+        const m5Visual = document.getElementById('m5Visual');
+        const m5Shine = document.getElementById('m5Shine');
+        const m5Circuit = document.getElementById('m5Circuit');
+        const m5Label = document.getElementById('m5Label');
+        const circuitPath = document.getElementById('circuitPath');
+
+        const bgImage = document.querySelector('.background-image');
+        const infoBottom = document.getElementById('infoBottom');
+        const infoRight = document.getElementById('infoRight');
+
+        function getScrollProgress(current, start, end) {
+            if (current < start) return 0;
+            if (current > end) return 1;
+            return (current - start) / (end - start);
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const rawPercent = window.scrollY / scrollHeight;
+
+            const zoomPhase = Math.min(rawPercent / 0.15, 1);
+            const baseSize = 180;
+            const startSize = 12000;
+            const currentSize = baseSize + (startSize - baseSize) * Math.pow(1 - zoomPhase, 5);
+            animatedText.setAttribute('font-size', currentSize);
+
+            const offsetX = (500 - (currentSize * 0.20)) - 500;
+            const offsetY = (500 - (currentSize * 0.02)) - 500;
+            animatedText.setAttribute('x', 500 + offsetX * Math.pow(1 - zoomPhase, 2));
+            animatedText.setAttribute('y', 500 + offsetY * Math.pow(1 - zoomPhase, 2));
+
+            bgImage.style.transform = `scale(${1.2 - (zoomPhase * 0.1)})`;
+
+            const m5Start = 0.12;
+            const m5End = 0.20;
+            let m5Opacity = getScrollProgress(rawPercent, m5Start, m5End);
+
+            animatedText.setAttribute('opacity', 1 - m5Opacity);
+            m5Group.setAttribute('opacity', m5Opacity);
+            m5Visual.setAttribute('opacity', m5Opacity);
+
+            const m5Scale = 0.8 + (m5Opacity * 0.2);
+            const m5Transform = `translate(${500 * (1 - m5Scale)}, ${500 * (1 - m5Scale)}) scale(${m5Scale})`;
+            m5Group.setAttribute('transform', m5Transform);
+            m5Visual.setAttribute('transform', m5Transform);
+
+            if (m5Opacity > 0) {
+                const shinePos = (rawPercent * 200) - 50;
+                const shineGrad = document.getElementById('shineGradient');
+                shineGrad.setAttribute('x1', `${shinePos}%`);
+                shineGrad.setAttribute('y1', `${shinePos}%`);
+                shineGrad.setAttribute('x2', `${shinePos + 100}%`);
+                shineGrad.setAttribute('y2', `${shinePos + 100}%`);
+
+                const circuitIntensity = 0.2 + Math.abs(Math.sin(rawPercent * 10)) * 0.3;
+                m5Circuit.setAttribute('opacity', circuitIntensity);
+                circuitPath.setAttribute('opacity', 0.2 + (rawPercent * 0.5));
+
+                m5Label.style.filter = `drop-shadow(0px 3px 3px rgba(0,0,0,0.6)) brightness(${1 + rawPercent * 0.2})`;
+            }
+
+            let bottomOpacity = 0;
+            let bottomY = 30;
+            if (rawPercent >= 0.25 && rawPercent < 0.55) {
+                if (rawPercent < 0.35) {
+                    bottomOpacity = getScrollProgress(rawPercent, 0.25, 0.35);
+                    bottomY = 30 * (1 - bottomOpacity);
+                } else if (rawPercent < 0.45) {
+                    bottomOpacity = 1;
+                    bottomY = 0;
+                } else {
+                    bottomOpacity = 1 - getScrollProgress(rawPercent, 0.45, 0.55);
+                    bottomY = -20 * getScrollProgress(rawPercent, 0.45, 0.55);
+                }
+            } else if (rawPercent >= 0.75) {
+                bottomOpacity = getScrollProgress(rawPercent, 0.75, 0.85);
+                bottomY = 30 * (1 - bottomOpacity);
+            }
+            infoBottom.style.opacity = bottomOpacity;
+            infoBottom.style.transform = `translateX(-50%) translateY(${bottomY}px)`;
+
+            // --- TRWAŁA DRUGA INFORMACJA ---
+            let rightOpacity = 0;
+            let rightY = 40;
+
+            // Zmieniono warunki: po osiągnięciu 0.50 progresu, opacity zostaje na 1
+            if (rawPercent >= 0.40) {
+                if (rawPercent < 0.50) {
+                    rightOpacity = getScrollProgress(rawPercent, 0.40, 0.50);
+                    rightY = 40 * (1 - rightOpacity);
+                } else {
+                    // Pozostaje widoczne na stałe po wjechaniu
+                    rightOpacity = 1;
+                    rightY = 0;
+                }
+            }
+
+            infoRight.style.opacity = rightOpacity;
+            infoRight.style.transform = `translateY(calc(-50% + ${rightY}px))`;
+        });
+
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+
+</html>

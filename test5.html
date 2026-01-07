@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacja Scroll - Multi-Reset</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .spacer {
+            height: 110vh;
+            /* Dużo miejsca do przewijania */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: #050505;
+        }
+
+        .image-section {
+            position: relative;
+            width: 100%;
+            height: 150vh;
+        }
+
+        .scroll-image {
+            position: absolute;
+            height: 70vh;
+            min-width: 125vw;
+            object-fit: cover;
+            opacity: 0;
+            left: 50%;
+            pointer-events: none;
+            /* Brak transition tutaj = natychmiastowy skok/reset */
+        }
+
+        .image-right {
+            z-index: 5;
+            top: 10vh;
+            transform: translateX(100%);
+        }
+
+        .image-left {
+            z-index: 10;
+            top: 50vh;
+            transform: translateX(-200%);
+        }
+
+        /* --- AKTYWACJA --- */
+        /* Gdy kontener ma klasę is-visible, dodajemy animację i pozycję docelową */
+        .is-visible .scroll-image {
+            opacity: 1;
+            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+        }
+
+        .is-visible .image-right {
+            transform: translateX(-37.5%);
+        }
+
+        .is-visible .image-left {
+            transform: translateX(-62.5%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="spacer">Przewiń w dół do sekcji zdjęć...</div>
+
+    <div class="image-section" id="animation-wrapper">
+        <img src="left-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 1" class="scroll-image image-right">
+        <img src="right-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 2" class="scroll-image image-left">
+    </div>
+
+    <div class="spacer">Przewiń w górę, aby zresetować animację</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrapper = document.querySelector('#animation-wrapper');
+
+            const observerOptions = {
+                root: null,
+                // rootMargin ustawia "linię ognia" na 60% od dołu ekranu.
+                // Reset następuje w momencie, gdy sekcja całkowicie opuści viewport.
+                rootMargin: "0px 0px -60% 0px",
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Wchodzi w pole widzenia (powyżej 60% od dołu)
+                        wrapper.classList.add('is-visible');
+                    } else {
+                        // Całkowicie znika z widoku - natychmiastowy reset
+                        // Sprawdzamy czy element jest pod czy nad oknem
+                        if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) {
+                            wrapper.classList.remove('is-visible');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            observer.observe(wrapper);
+        });
+    </script>
+</body>
+
+</html>
