@@ -53,10 +53,12 @@
             position: relative;
             padding-bottom: 10px;
         }
+
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transition: opacity 0.8s ease-out var(--d, 0s), 
+                        transform 0.8s ease-out var(--d, 0s);
         }
 
         .reveal.active {
@@ -285,6 +287,11 @@
             padding: 0 10%;
             align-items: flex-start;
         }
+        .prevBtn, .nextBtn {
+            z-index: 50;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
 
         .gallery-item {
             flex-shrink: 0;
@@ -465,10 +472,10 @@
     <div class="container mx-auto flex flex-col items-center py-20">
 
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
-            <h3 >AI</h3>
-            <h1 class="text-[80px] leading-tight font-semibold">Built for AI.</h1>
-            <h1 class="text-[80px] leading-tight font-semibold mb-16">From the silicon up.</h1>
-            <p class="text-2xl font-semibold text-gray-400">
+            <h3 class="reveal">AI</h3>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Built for AI.</h1>
+            <h1 class="text-[80px] leading-tight font-semibold mb-16 reveal" style="--d: 0.4s">From the silicon up.</h1>
+            <p class="text-2xl font-semibold text-gray-400 reveal" style="--d: 0.6s">
                 Apple silicon, and every major subsystem that powers it, is designed for AI — creating a platform that
                 comprehensively
                 unites hardware, software, and ecosystem. So you can run demanding on-device AI workloads with
@@ -478,7 +485,7 @@
         </div>
 
         <div class="wrapper w-[95%] text-white grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
-            <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col">
+            <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col reveal">
                 <div class="p-10">
                     <p class="text-2xl font-semibold">
                         AI apps on Mac. Born to run. Mac is optimized to handle the world’s most advanced AI apps.
@@ -489,7 +496,7 @@
                 <img src="images/Samsung-Mobile-Galaxy-Book5-Pro-360-User-Guide-AI-PC_main11 (1)_Nero_AI_Image_Upscaler_Standard.png"
                     class="w-full h-[450px] object-cover mt-auto">
             </div>
-            <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col">
+            <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col reveal">
                 <div class="p-10">
                     <p class="text-2xl font-semibold">
                         AI tools in apps. Mac makes magic. Transform vocals with AI plug-ins like MicDrop for Logic Pro.
@@ -503,10 +510,10 @@
 
         <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32">
             <h1
-                class="w-fit text-[56px] pb-2 font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,#1B88F6,#C65CEA,#E24A88,#EA5711)]">
+                class="w-fit text-[56px] pb-6 font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,#1B88F6,#C65CEA,#E24A88,#EA5711)] reveal" style="--d: 0.2s">
                 Apple Intelligence.</h1>
-            <h1 class="text-[56px] leading-tight font-semibold mb-16">Task and you shall receive.</h1>
-            <p class="text-2xl font-semibold text-gray-400">
+            <h1 class="text-[56px] leading-tight font-semibold mb-16 reveal" style="--d: 0.4s">Task and you shall receive.</h1>
+            <p class="text-2xl font-semibold text-gray-400 reveal" style="--d: 0.6s">
                 Apple Intelligence helps you write, express yourself, and get things done effortlessly. Turn a quick
                 note into a
                 polished announcement. Remove distractions from photos with Clean Up. Create unique images with new
@@ -539,7 +546,7 @@
                 <span class="letter from-top">G</span>
             </div>
         </div>
-        <p class="text-2xl font-semibold text-gray-400 w-[65%] text-center mt-32">
+        <p class="text-2xl font-semibold text-gray-400 w-[75%] text-center mt-32">
             Apple Intelligence is designed to protect your privacy at every step. It’s integrated into the core of your
             Mac
             through
@@ -552,8 +559,8 @@
         </p>
 
         <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64">
-            <h3 class="mb-12">Battery</h3>
-            <h1 class="text-[80px] leading-tight font-semibold">All-day battery life. <br>Think outside the outlet.</h1>
+            <h3 class="mb-12 reveal">Battery</h3>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">All-day battery life. <br>Think outside the outlet.</h1>
         </div>
 
     </div>
@@ -564,7 +571,7 @@
     </div>
     <div class="container mx-auto flex flex-col items-center py-20">
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
-            <p class="text-2xl font-semibold text-gray-400 mb-32">
+            <p class="text-2xl font-semibold text-gray-400 mb-32 reveal">
                 MacBook Pro has the longest battery life ever in a Mac — up to 24 hours — and supports fast charge,
                 allowing it to
                 charge up to 50 percent in just 30 minutes.48 All models provide the same performance whether they’re
@@ -575,17 +582,17 @@
             <div class="flex gap-10">
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 block"></span>
-                    <p class="text-[15px]">Up to</p>
-                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent">24 hours
+                    <p class="text-[15px] reveal">Up to</p>
+                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent reveal" style="--d: 0.2s">24 hours
                     </p>
-                    <p class="text-[15px]">battery life</p>
+                    <p class="text-[15px] reveal" style="--d: 0.4s">battery life</p>
                 </div>
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 flex"></span>
-                    <p class="text-[15px]">Up to</p>
-                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent">14 more
+                    <p class="text-[15px] reveal">Up to</p>
+                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent reveal" style="--d: 0.2s">14 more
                         hours</p>
-                    <p class="text-[15px]">than Intel-based MacBook Pro</p>
+                    <p class="text-[15px] reveal" style="--d: 0.4s">than Intel-based MacBook Pro</p>
                 </div>
             </div>
         </div>
@@ -615,7 +622,7 @@
     </section>
     <div class="container mx-auto flex flex-col items-center py-20">
         <div class="wrapper w-[65%] ">
-            <p class="text-2xl font-semibold text-gray-400 mb-32">
+            <p class="text-2xl font-semibold text-gray-400 mb-32 reveal">
                 MacBook Pro has the longest battery life ever in a Mac — up to 24 hours — and supports fast charge,
                 allowing it to
                 charge up to 50 percent in just 30 minutes.48 All models provide the same performance whether they’re
@@ -629,7 +636,7 @@
     <div class="gallery-container">
         <div class="image-wrapper no-scrollbar imageWrapper">
 
-            <figure class="gallery-item w-[80vw] md:w-[800px]">
+            <figure class="gallery-item reveal w-[80vw] md:w-[800px]" style="--d: 0s">
                 <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
@@ -640,7 +647,7 @@
                 </figcaption>
             </figure>
 
-            <figure class="gallery-item w-[60vw] md:w-[400px]">
+            <figure class="gallery-item reveal w-[60vw] md:w-[400px]" style="--d: 0.2s">
                 <img src="images\maxresdefault.jpg" alt="Las">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
@@ -650,7 +657,7 @@
                 </figcaption>
             </figure>
 
-            <figure class="gallery-item w-[70vw] md:w-[600px]">
+            <figure class="gallery-item reveal w-[70vw] md:w-[600px]" style="--d: 0.4s">
                 <img src="images\Screenshot-3.png" alt="Wodospad">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
@@ -661,7 +668,7 @@
                 </figcaption>
             </figure>
 
-            <figure class="gallery-item w-[50vw] md:w-[450px]">
+            <figure class="gallery-item reveal w-[50vw] md:w-[450px]" style="--d: 0.6s">
                 <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
@@ -673,7 +680,7 @@
         </div>
 
         <div class="nav-controls">
-            <button class="nav-btn prevBtn" aria-label="Poprzednie" disabled>
+            <button class="nav-btn prevBtn" aria-label="Poprzednie">
                 <svg viewBox="0 0 24 24">
                     <path d="M15 18l-6-6 6-6" />
                 </svg>
@@ -688,9 +695,9 @@
 
     <div class="container mx-auto flex flex-col items-center">
         <div class="wrapper text-white text-3xl font-medium w-[65%]">
-            <h3 class="mb-12">Battery</h3>
-            <h1 class="text-[80px] leading-tight font-semibold">All-day battery life. <br>Think outside the outlet.</h1>
-            <p class="text-2xl font-semibold text-gray-400 mt-16">
+            <h3 class="mb-12 reveal">Battery</h3>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">All-day battery life. <br>Think outside the outlet.</h1>
+            <p class="text-2xl font-semibold text-gray-400 mt-16 reveal" style="--d: 0.4s">
                 Mac and iPhone are incredible on their own. But when you use them together, they work wonders. Thanks to
                 Continuity, you
                 can move seamlessly across devices to share files and photos, hand off tasks, and even control your
@@ -702,9 +709,9 @@
             <img src="images/03_samsung_dex_multi_workspace_mo_720x668_Nero_AI_Image_Upscaler_Photo.png">
         </div>
         <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32">
-            <h3 class="mb-12">Apps</h3>
-            <h1 class="text-[80px] leading-tight font-semibold">Your ambitions <br> There's an app for that</h1>
-            <p class="text-2xl font-semibold text-gray-400 mt-16">
+            <h3 class="mb-12 reveal">Apps</h3>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Your ambitions <br> There's an app for that</h1>
+            <p class="text-2xl font-semibold text-gray-400 mt-16 reveal" style="--d: 0.4s">
                 Tens of thousands of apps are optimized for Apple silicon — from your go-to productivity apps to your
                 favorite games and
                 hardest-working pro apps. With MacBook Pro, they all soar.
@@ -720,7 +727,8 @@
                 <h1 class="text-[56px] leading-tight font-semibold mb-8">Up to 1,600 nits peak HDR brightness</h1>
                 <h1 class="text-[56px] leading-tight font-semibold mb-8">1,000 nits sustained HDR brightness</h1>
                 <h1 class="text-[56px] leading-tight font-semibold mb-8">1,000,000:1 contrast ratio</h1>
-                <h1 class="text-[56px] leading-tight font-semibold mb-8">Down to 1 nit brightness in dark environments</h1>
+                <h1 class="text-[56px] leading-tight font-semibold mb-8">Down to 1 nit brightness in dark environments
+                </h1>
                 <h1 class="text-[56px] leading-tight font-semibold mb-8">Up to 1,000 nits SDR brightness outdoors</h1>
                 <h1 class="text-[56px] leading-tight font-semibold">1,000,000,000 colors</h1>
             </div>
@@ -728,18 +736,21 @@
     </div>
     <div class="container mx-auto flex flex-col items-center">
         <div class="wrapper text-white text-3xl font-medium w-[65%]">
-            <p class="text-2xl font-semibold text-gray-400 mt-16">
-                Go from the sunniest terrace to the darkest studio with more ease than ever. The eye-popping Liquid Retina XDR display
-                offers up to 1,600 nits peak HDR brightness. And it provides up to 1,000 nits of brightness for SDR content in bright
-                light so you can see what’s on your screen more clearly outside. In low-light situations, it dims to 1 nit so you can
+            <p class="text-2xl font-semibold text-gray-400 mt-16 reveal">
+                Go from the sunniest terrace to the darkest studio with more ease than ever. The eye-popping Liquid
+                Retina XDR display
+                offers up to 1,600 nits peak HDR brightness. And it provides up to 1,000 nits of brightness for SDR
+                content in bright
+                light so you can see what’s on your screen more clearly outside. In low-light situations, it dims to 1
+                nit so you can
                 work comfortably in darker spaces.
             </p>
         </div>
     </div>
     <div class="gallery-container">
         <div class="image-wrapper no-scrollbar imageWrapper">
-    
-            <figure class="gallery-item w-[80vw] md:w-[800px]">
+
+            <figure class="gallery-item w-[80vw] md:w-[800px] reveal">
                 <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
@@ -749,8 +760,8 @@
                         startowy do pracy z systemem.</p>
                 </figcaption>
             </figure>
-    
-            <figure class="gallery-item w-[60vw] md:w-[400px]">
+
+            <figure class="gallery-item w-[60vw] md:w-[400px] reveal" style="--d: 0.2s">
                 <img src="images\maxresdefault.jpg" alt="Las">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
@@ -759,8 +770,8 @@
                     </p>
                 </figcaption>
             </figure>
-    
-            <figure class="gallery-item w-[70vw] md:w-[600px]">
+
+            <figure class="gallery-item w-[70vw] md:w-[600px] reveal" style="--d: 0.4s">
                 <img src="images\Screenshot-3.png" alt="Wodospad">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
@@ -770,8 +781,8 @@
                         kształcie fali.</p>
                 </figcaption>
             </figure>
-    
-            <figure class="gallery-item w-[50vw] md:w-[450px]">
+
+            <figure class="gallery-item w-[50vw] md:w-[450px] reveal" style="--d: 0.6s">
                 <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
                 <figcaption class="item-caption">
                     <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
@@ -779,11 +790,11 @@
                         Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
                 </figcaption>
             </figure>
-    
+
         </div>
-    
+
         <div class="nav-controls">
-            <button class="nav-btn prevBtn" aria-label="Poprzednie" disabled>
+            <button class="nav-btn prevBtn" aria-label="Poprzednie">
                 <svg viewBox="0 0 24 24">
                     <path d="M15 18l-6-6 6-6" />
                 </svg>
@@ -797,68 +808,79 @@
     </div>
     <div class="container mx-auto flex flex-col items-center pt-20">
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
-            <h3>Ports and Connectivity</h3>
-            <h1 class="text-[80px] leading-tight font-semibold">Make powerful <br>connections.</h1>
-            <p class="text-2xl font-semibold text-gray-400">
-                MacBook Pro packs an array of ports for connecting high-speed peripherals, driving high-resolution displays, or directly
-                offloading SDXC cards. Models with the M5 chip feature Thunderbolt 4. Models with M4 Pro or M4 Max feature Thunderbolt
+            <h3 class="reveal">Ports and Connectivity</h3>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Make powerful <br>connections.</h1>
+            <p class="text-2xl font-semibold text-gray-400 reveal" style="--d: 0.4s">
+                MacBook Pro packs an array of ports for connecting high-speed peripherals, driving high-resolution
+                displays, or directly
+                offloading SDXC cards. Models with the M5 chip feature Thunderbolt 4. Models with M4 Pro or M4 Max
+                feature Thunderbolt
                 5, which offers transfer speeds of up to 120Gb/s.51
                 <br><br>
-                MacBook Pro also supports both Wi-Fi 6E52 and Bluetooth 5.3 to connect to the internet and your wireless devices.
+                MacBook Pro also supports both Wi-Fi 6E52 and Bluetooth 5.3 to connect to the internet and your wireless
+                devices.
             </p>
         </div>
     </div>
     <div class="image-section -translate-y-[30%]" id="animation-wrapper">
         <div id="trigger-point" class=""></div>
-    
+
         <img src="left-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 1" class="scroll-image image-right">
-    
+
         <img src="right-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 2" class="scroll-image image-left">
     </div>
-    <div class="container mx-auto flex flex-col items-center -translate-y-[10%]">
+    <div class="container mx-auto flex flex-col items-center -translate-y-[7.5%]">
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
             <div class="flex gap-10">
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 block"></span>
-                    <p class="text-5xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent pb-10">Thunderbolt <br> HDMI <br> USB-A <br> MicroSD <br> Headphone jack</p>
+                    <p class="text-5xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent pb-10">
+                        Thunderbolt <br> HDMI <br> USB-A <br> MicroSD <br> Headphone jack</p>
                 </div>
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 flex"></span>
-                    <p class="text-3xl font-semibold text-gray-400">Drive external displays. Connect up to two high-resolution external displays with M5 and M4 Pro, or up to four
-                    high-resolution displays with M4 Max.</p>
+                    <p class="text-3xl font-semibold text-gray-400">Drive external displays. Connect up to two
+                        high-resolution external displays with M5 and M4 Pro, or up to four
+                        high-resolution displays with M4 Max.</p>
                 </div>
             </div>
         </div>
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
-            <h3>Security</h3>
-            <h1 class="text-[80px] leading-tight font-semibold">No compromises.</h1>
+            <h3 class="reveal">Security</h3>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">No compromises.</h1>
         </div>
         <div class="wrapper flex justify-center items-center h-screen -translate-y-[15%]">
             <img src="images\SDSAC-10137-Book5-Pro_16_US_Gray_002_Top-Open_RGB-1600x1200_Nero_AI_Image_Upscaler_Photo.png"
                 class="w-full object-cover">
         </div>
         <div class="wrapper text-white text-xl font-medium w-[75%] mb-32">
-            <p class="text-2xl font-semibold text-gray-400 text-center">
-                <span class="text-white">Security starts with Apple silicon</span> and extends to the macOS architecture. This deep integration of hardware and software
-                along with automatic software updates helps keep MacBook Pro stable and protected for the long term. The security
-                architecture also powers features such as Touch ID, Find My, and advanced defenses that protect against viruses and
+            <p class="text-2xl font-semibold text-gray-400 text-center reveal">
+                <span class="text-white">Security starts with Apple silicon</span> and extends to the macOS
+                architecture. This deep integration of hardware and software
+                along with automatic software updates helps keep MacBook Pro stable and protected for the long term. The
+                security
+                architecture also powers features such as Touch ID, Find My, and advanced defenses that protect against
+                viruses and
                 malware.
             </p>
             <div class="flex gap-10 mt-16">
                 <div class="flex-1 flex flex-col items-start text-xl">
-                    <img src="images/icons/fingerprint.png" alt="" class="icon w-16 h-16 object-cover mb-4">
-                    <p class="font-semibold text-gray-400 text-xl">Touch ID. Unlock your Mac, sign in to apps, and make secure payments with your fingertip. The Secure Enclave keeps your
-                    fingerprint data safe.</p>
+                    <img src="images/icons/fingerprint.png" alt="" class="icon w-16 h-16 object-cover mb-4 reveal">
+                    <p class="font-semibold text-gray-400 text-xl reveal" style="--d: 0.2s">Touch ID. Unlock your Mac, sign in to apps, and make
+                        secure payments with your fingertip. The Secure Enclave keeps your
+                        fingerprint data safe.</p>
                 </div>
                 <div class="flex-1 flex flex-col items-start">
-                    <img src="images/icons/apps.311.13841252692681885.82e4c6e4-17fa-46ed-96a8-3bc6ee0872ef.png" alt="" class="icon w-16 h-16 object-cover mb-4">
-                    <p class="font-semibold text-gray-400">
+                    <img src="images/icons/apps.311.13841252692681885.82e4c6e4-17fa-46ed-96a8-3bc6ee0872ef.png" alt=""
+                        class="icon w-16 h-16 object-cover mb-4 reveal">
+                    <p class="font-semibold text-gray-400 reveal" style="--d: 0.2s">
                         Find My. Locate your misplaced MacBook Pro and remotely lock or erase it if needed.
                     </p>
                 </div>
                 <div class="flex-1 flex flex-col items-start">
-                    <svg class="text-white w-16 h-16 object-cover mb-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                        y="0px" width="100%" viewBox="0 0 534 601" xml:space="preserve">
+                    <svg class="text-white w-16 h-16 object-cover mb-4 reveal" version="1.1" id="Layer_1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        width="100%" viewBox="0 0 534 601" xml:space="preserve">
                         <path fill="currentColor" stroke="none" d="
                     M535.000000,84.000000 
                     	C535.000000,118.687561 535.000000,153.375122 534.672546,188.845322 
@@ -982,45 +1004,59 @@
                     	C520.776794,80.143105 527.914490,81.988403 535.000000,84.000000 
                     z" />
                     </svg>
-                    <p class="font-semibold text-gray-400">
+                    <p class="font-semibold text-gray-400 reveal" style="--d: 0.2s">
                         FileVault. Encrypt and protect your files and data without having to think about it.
                     </p>
                 </div>
             </div>
         </div>
         <div class="wrapper text-white text-3xl font-medium w-[75%]">
-            <h1 class="text-[86px] leading-tight font-semibold text-center">There’s never been a better time to upgrade.</h1>
-            <h3 class="text-3xl text-gray-400 mt-16">Here's what you can get with the new <span class="text-white">14-inch MacBook Pro with M5</span></h3>
+            <h1 class="text-[86px] leading-tight font-semibold text-center reveal">There’s never been a better time to upgrade.
+            </h1>
+            <h3 class="text-3xl text-gray-400 mt-16 reveal" style="--d: 0.2s">Here's what you can get with the new <span
+                    class="text-white">14-inch MacBook Pro with M5</span></h3>
         </div>
         <div class="wrapper text-white text-3xl font-medium w-[90%] flex items-center justify-center mt-12">
             <div style="width: var(--c-width); height: var(--c-height);" class="gap-5 max-w-[95vw] flex">
-            
+
                 <div class="flex-1 flex flex-col gap-5">
-                    <div class="h-[60%] w-full bg-[url('images/upgraders_intel_1__c2uwtldp88mu_large.jpg')] bg-cover bg-center rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10">
+                    <div
+                        class="h-[60%] w-full bg-[url('images/upgraders_intel_1__c2uwtldp88mu_large.jpg')] bg-cover bg-center rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10 reveal" style="--d: 0.4s">
                         <img src="images/icon_sparkles__crqv6fji0x26_large.png" alt="sparkles">
                         <h3 class="text-5xl text-white">7x faster than i7-920 in all tasks.</h3>
                     </div>
-                    <div class="h-[40%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex items-center justify-start pl-10 gap-10">
+                    <div
+                        class="h-[40%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex items-center justify-start pl-10 gap-10 reveal" style="--d: 0.6s">
                         <img src="images/icon_xdr_display__yb78ajay2qaa_large.png" alt="sun" class="scale-125">
-                        <h3 class="text-4xl text-white font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif] max-w-[45%]">A stunning Liquid Retina XDR display.</h3>
+                        <h3
+                            class="text-4xl text-white font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif] max-w-[45%]">
+                            A stunning Liquid Retina XDR display.</h3>
                     </div>
                 </div>
-            
+
                 <div class="flex-1 flex flex-col gap-5">
-                    <div class="h-[40%] w-full bg-gray-900 rounded-[32px] shadow-xl flex items-center justify-start pl-10">
-                        <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp" alt="galaxy ai" class="w-48 h-48 object-cover">
-                        <h3 class="text-4xl text-gray-400 font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif]">Galaxy AI</h3>
+                    <div
+                        class="h-[40%] w-full bg-gray-900 rounded-[32px] shadow-xl flex items-center justify-start pl-10 reveal" style="--d: 0.6s">
+                        <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp"
+                            alt="galaxy ai" class="w-48 h-48 object-cover">
+                        <h3
+                            class="text-4xl text-gray-400 font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif]">
+                            Galaxy AI</h3>
                     </div>
-                    <div class="h-[60%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10">
+                    <div
+                        class="h-[60%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10 reveal" style="--d: 0.4s">
                         <img src="images/icon_battery_life__erphl3wwf0sy_large.png" alt="sparkles">
-                        <h3 class="text-5xl text-white">Up to <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#36AA87] to-[#6DD400]">7 more hours</span> battery life. <span class="text-gray-400">(Up to 15 hours total.)</span></h3>
+                        <h3 class="text-5xl text-white">Up to <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-[#36AA87] to-[#6DD400]">7
+                                more hours</span> battery life. <span class="text-gray-400">(Up to 15 hours
+                                total.)</span></h3>
                     </div>
                 </div>
-            
+
             </div>
         </div>
     </div>
-<<script>
+<script>
     gsap.registerPlugin(ScrollTrigger);
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -1045,7 +1081,7 @@
                     body.classList.remove('lock-scroll'); // Ręczne odblokowanie
                 } else {
                     if (video) {
-                        video.play().catch(() => {});
+                        video.play().catch(() => { });
                         if (!hasBeenPlayed) body.classList.add('lock-scroll');
                     }
                 }
@@ -1067,14 +1103,14 @@
                         anticipatePin: 1
                     }
                 })
-                .to("#text-bundle", { y: "0", opacity: 1, duration: 2 })
-                .to("#text-bundle", { y: "-100vh", opacity: 0, duration: 2 })
-                .to("#main-img", { scale: 0.85, borderRadius: "40px", duration: 1.5 });
+                    .to("#text-bundle", { y: "0", opacity: 1, duration: 2 })
+                    .to("#text-bundle", { y: "-100vh", opacity: 0, duration: 2 })
+                    .to("#main-img", { scale: 0.85, borderRadius: "40px", duration: 1.5 });
             }
 
             ScrollTrigger.refresh();
             if (lastScrollY > 0) window.scrollTo(0, lastScrollY);
-            
+
             body.classList.add('loaded');
 
             // Sprawdzenie stanu początkowego
@@ -1087,7 +1123,7 @@
                     if (video) {
                         video.muted = true;
                         video.loop = true;
-                        video.play().catch(() => {});
+                        video.play().catch(() => { });
                     }
                 }
             }
@@ -1126,26 +1162,69 @@
                                 if (videoCheckbox) videoCheckbox.checked = true;
                                 window.scrollBy({ top: 150, behavior: 'smooth' });
                             };
-                            video.play().catch(() => {
-                                // Jeśli przeglądarka zablokuje autoplay z dźwiękiem, 
-                                // warto tu zdecydować czy blokować scrolla, 
-                                // bo użytkownik może utknąć.
-                            });
+                            video.play().catch(() => { });
                         }
                     }
                 }
             }
         });
 
-        // --- POZOSTAŁE FUNKCJE I OBSERWATORY (Naprawione nazwy) ---
+        // --- POZOSTAŁE FUNKCJE I OBSERWATORY ---
         function initGalleries() {
             document.querySelectorAll('.gallery-container').forEach(gallery => {
-                const w = gallery.querySelector('.imageWrapper');
-                const b = [gallery.querySelector('.prevBtn'), gallery.querySelector('.nextBtn')];
-                if (w && b[0] && b[1]) {
-                    b[1].onclick = () => w.scrollBy({ left: 600, behavior: 'smooth' });
-                    b[0].onclick = () => w.scrollBy({ left: -600, behavior: 'smooth' });
-                }
+                const wrapper = gallery.querySelector('.imageWrapper');
+                const prevBtn = gallery.querySelector('.prevBtn');
+                const nextBtn = gallery.querySelector('.nextBtn');
+
+                if (!wrapper || !prevBtn || !nextBtn) return;
+
+                const updateButtons = () => {
+                    const scrollLeft = Math.ceil(wrapper.scrollLeft);
+                    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+
+                    // Logika lewej strzałki: aktywna jeśli przewinięto o więcej niż 5px
+                    if (scrollLeft > 5) {
+                        prevBtn.style.opacity = "1";
+                        prevBtn.style.pointerEvents = "auto";
+                        prevBtn.style.cursor = "pointer";
+                    } else {
+                        prevBtn.style.opacity = "0.3";
+                        prevBtn.style.pointerEvents = "none";
+                        prevBtn.style.cursor = "default";
+                    }
+
+                    // Logika prawej strzałki: ukryj jeśli jesteśmy na końcu
+                    if (scrollLeft >= maxScroll - 5) {
+                        nextBtn.style.opacity = "0.3";
+                        nextBtn.style.pointerEvents = "none";
+                    } else {
+                        nextBtn.style.opacity = "1";
+                        nextBtn.style.pointerEvents = "auto";
+                    }
+                };
+
+                nextBtn.onclick = () => {
+                    wrapper.scrollBy({
+                        left: wrapper.clientWidth * 0.8,
+                        behavior: 'smooth'
+                    });
+                    // Wymuszamy aktualizację po krótkiej chwili (na czas animacji)
+                    setTimeout(updateButtons, 500);
+                };
+
+                prevBtn.onclick = () => {
+                    wrapper.scrollBy({
+                        left: -(wrapper.clientWidth * 0.8),
+                        behavior: 'smooth'
+                    });
+                    setTimeout(updateButtons, 500);
+                };
+
+                // Nasłuchiwanie na scroll
+                wrapper.addEventListener('scroll', updateButtons);
+
+                // Wywołanie na starcie, żeby ustawić strzałki
+                updateButtons();
             });
         }
 
@@ -1158,10 +1237,10 @@
                     revealObs.unobserve(entry.target);
                 }
             });
-        }, { rootMargin: '0px 0px -40% 0px', threshold: 0.01 });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
 
         revealItems.forEach(item => {
-            if (item.getBoundingClientRect().top < window.innerHeight * 0.6) {
+            if (item.getBoundingClientRect().top < window.innerHeight * 0.1) {
                 item.classList.add('active');
             } else {
                 revealObs.observe(item);
