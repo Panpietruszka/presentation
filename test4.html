@@ -13,6 +13,12 @@
         :root {
             --c-width: 1200px;
             --c-height: 600px;
+            --bubble-h: 56px;
+            --apple-blue: #007AFF;
+            --strict-margin: 100px;
+        }
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -327,10 +333,8 @@
         }
 
         .nav-btn {
-            background: #333;
-            border: 1px solid #333;
-            width: 52px;
-            height: 52px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -341,11 +345,25 @@
             color: whitesmoke;
             margin-bottom: 20px;
         }
+        .nav-btn-dark {
+            background: #333;
+            border-radius: 1px solid #333;
+        }
+        .nav-btn-light {
+            background: rgb(230, 230, 230);
+        }
 
         .nav-btn:hover:not(:disabled) {
-            background: #444;
             transform: scale(1.05);
+        }
+        
+        .nav-btn-dark:hover:not(:disabled) {
             border-color: #444;
+            background: #444;
+        }
+
+        .nav-btn-light:hover:not(:disabled) {
+            background: rgb(220, 220, 220);
         }
 
         .nav-btn:disabled {
@@ -358,8 +376,13 @@
             width: 28px;
             height: 28px;
             fill: none;
-            stroke: currentColor;
             stroke-width: 2.5;
+        }
+        .nav-btn-dark svg {
+            stroke: currentColor;
+        }
+        .nav-btn-light svg {
+            stroke: rgb(50, 50, 50);
         }
 
         .scrolling-section {
@@ -464,6 +487,116 @@
 
         .is-visible .image-left {
             transform: translateX(-62.5%);
+        }
+
+        #magic-container {
+            position: fixed;
+            bottom: -400px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: var(--bubble-h);
+            height: var(--bubble-h);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(30px) saturate(180%) brightness(1.2);
+            -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(1.2);
+            display: flex;
+            align-items: center;
+            box-shadow:
+                0 20px 50px -10px rgba(0, 0, 0, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            z-index: 99999;
+            border-radius: 999px;
+            will-change: bottom, width, opacity, transform, filter;
+            cursor: pointer;
+            overflow: hidden;
+            /* Dla efektu połysku */
+        }
+
+        /* Efekt połysku (Shine) */
+        #magic-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.4),
+                    transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+        }
+
+        .inner-container-layout {
+            position: relative;
+            width: 110%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        #status-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: 44px;
+            height: 44px;
+            background: var(--apple-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        #expanded-ui-content {
+            opacity: 0;
+            padding-left: 28px;
+            padding-right: 60px;
+            width: 100%;
+            pointer-events: none;
+            filter: blur(10px);
+            /* Startowe rozmycie do animacji */
+        }
+
+        .page-buffer {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d1d1d6;
+            font-weight: 200;
+            font-size: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        #trigger-zone {
+            height: 255vh;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .visual-guide {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 122, 255, 0.1);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .guide-top {
+            top: var(--strict-margin);
+        }
+
+        .guide-bottom {
+            bottom: var(--strict-margin);
         }
     </style>
 </head>
@@ -680,12 +813,12 @@
         </div>
 
         <div class="nav-controls">
-            <button class="nav-btn prevBtn" aria-label="Poprzednie">
+            <button class="nav-btn prevBtn nav-btn-dark" aria-label="Poprzednie">
                 <svg viewBox="0 0 24 24">
                     <path d="M15 18l-6-6 6-6" />
                 </svg>
             </button>
-            <button class="nav-btn nextBtn" aria-label="Następne">
+            <button class="nav-btn nextBtn nav-btn-dark" aria-label="Następne">
                 <svg viewBox="0 0 24 24">
                     <path d="M9 18l6-6-6-6" />
                 </svg>
@@ -794,12 +927,12 @@
         </div>
 
         <div class="nav-controls">
-            <button class="nav-btn prevBtn" aria-label="Poprzednie">
+            <button class="nav-btn prevBtn nav-btn-dark" aria-label="Poprzednie">
                 <svg viewBox="0 0 24 24">
                     <path d="M15 18l-6-6 6-6" />
                 </svg>
             </button>
-            <button class="nav-btn nextBtn" aria-label="Następne">
+            <button class="nav-btn nextBtn nav-btn-dark" aria-label="Następne">
                 <svg viewBox="0 0 24 24">
                     <path d="M9 18l6-6-6-6" />
                 </svg>
@@ -1056,6 +1189,140 @@
             </div>
         </div>
     </div>
+    <div class="flex flex-col items-start px-20 py-20 bg-white text-black">
+        <div class="wrapper text-3xl font-medium w-full md:w-[65%] mb-32">
+            <h1 class="text-6xl text-left">Why Apple is the best <br> place to buy Mac</h1>
+        </div>
+            <div class="gallery-container">
+                <div class="image-wrapper no-scrollbar imageWrapper">
+            
+                    <figure class="gallery-item reveal w-[80vw] md:w-[800px]" style="--d: 0s">
+                        <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
+                        <figcaption class="item-caption">
+                            <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
+                                do najczęściej używanych aplikacji, ostatnich dokumentów oraz
+                                szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując czysty
+                                i zorganizowany punkt
+                                startowy do pracy z systemem.</p>
+                        </figcaption>
+                    </figure>
+            
+                    <figure class="gallery-item reveal w-[60vw] md:w-[400px]" style="--d: 0.1s">
+                        <img src="images\maxresdefault.jpg" alt="Las">
+                        <figcaption class="item-caption">
+                            <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
+                                rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
+                                To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w systemie.
+                            </p>
+                        </figcaption>
+                    </figure>
+            
+                    <figure class="gallery-item reveal w-[70vw] md:w-[600px]" style="--d: 0.2s">
+                        <img src="images\Screenshot-3.png" alt="Wodospad">
+                        <figcaption class="item-caption">
+                            <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
+                                aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
+                                półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska tapeta
+                                o abstrakcyjnym
+                                kształcie fali.</p>
+                        </figcaption>
+                    </figure>
+            
+                    <figure class="gallery-item reveal w-[50vw] md:w-[450px]" style="--d: 0.3s">
+                        <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
+                        <figcaption class="item-caption">
+                            <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
+                                błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
+                                Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
+                        </figcaption>
+                    </figure>
+            
+                </div>
+            
+                <div class="nav-controls">
+                    <button class="nav-btn prevBtn nav-btn-light" aria-label="Poprzednie">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <button class="nav-btn nextBtn nav-btn-light" aria-label="Następne">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="wrapper text-3xl font-medium w-full mb-32">
+                <section id="trigger-zone">
+                    <div class="flex flex-col justify-start h-full">
+                        <h1 class="text-[60px] leading-tight font-semibold reveal py-20" style="--d: 0.2s">Introducing the new Book6 Series</h1>
+                        <img src="images/book6-series.webp" alt="" class="w-fit h-fit">
+                        <div class="compare-models flex justify-center items-center mt-48 gap-10 text-center" id="compare-models">
+                            <div class="first-column w-[600px]">
+                                <h3 class="py-4">Galaxy Book5 Pro 14" and 16"</h3>
+                                <p class="text-xl font-normal py-2">Strikingly thin and fast so you can work, play, or create anywhere.</p>
+                                <p class="text-xl font-semibold py-2">From $999</p>
+                                <div class="same-container py-6 px-8 mb-10">
+                                    <p class="text-xl font-normal">Currently viewing</p>
+                                </div>
+                                <a href="#" class="text-xl font-semibold">Buy <img src="images/right-arrow.png" alt="" class="inline-block h-3 w-3 align-baseline"></a>
+                            </div>
+                            <div class="second-column w-[600px]">
+                                <h3 class="py-4">Galaxy Book6 Pro 14" and 16"</h3>
+                                <p class="text-xl font-normal py-2">The most advanced Mac laptops for demanding workflows.</p>
+                                <p class="text-xl font-semibold py-2">From $1299</p>
+                                <div class="button-container py-4 px-4 text-xl mb-10">
+                                    <button class="px-4 py-2 rounded-2xl bg-[var(--apple-blue)] text-white">Learn More</button>
+                                </div>
+                                <a href="#" class="text-xl font-semibold">Buy <img src="images/right-arrow.png" alt="" class="inline-block h-3 w-3 align-baseline"></a>
+                            </div>
+                        </div>
+                        <div class="flex justify-center items-center">
+                            <span class="h-[1px] w-[65%] bg-gray-400 mt-16 opacity-75"></span>
+                        </div>
+                        <div class="compare-models flex justify-center items-center gap-10 text-center mt-16">
+                            <div class="first-column w-[600px]">
+                                <p class="text-xl font-normal py-2">Intel 7 258V</p>
+                                <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp" alt="" class="h-20 w-23 block align-baseline mx-auto mt-5">
+                                <p class="text-xl font-normal py-2">Galaxy AI</p>
+                                <p class="text-[14px] font-normal pt-2">Up to</p>
+                                <p class="text-2xl font-semibold">25 hours</p>
+                                <p class="text-[14px] font-normal pb-2">battery life</p>
+                            </div>
+                            <div class="second-column w-[600px]">
+                                <p class="text-xl font-normal py-2">Intel X7 368H</p>
+                                <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp" alt="" class="h-20 w-23 block align-baseline mx-auto mt-5">
+                                <p class="text-xl font-normal py-2">Galaxy AI</p>
+                                <p class="text-[14px] font-normal pt-2">Up to</p>
+                                <p class="text-2xl font-semibold">30 hours</p>
+                                <p class="text-[14px] font-normal pb-2">battery life</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <a href="#compare-models">
+                <div id="magic-container">
+                    <div class="inner-container-layout">
+                        <div id="status-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                        <div id="expanded-ui-content">
+                            <span class="text-[16px] font-semibold text-gray-900 tracking-tight whitespace-nowrap block">
+                                Compare Book5 Pro with Book 6 Pro
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+    </div>
+
+    <footer>
+        
+    </footer>
 <script>
     gsap.registerPlugin(ScrollTrigger);
 
@@ -1087,6 +1354,16 @@
                 }
             });
         }
+        // Przewinięcie na samą górę strony
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+        const sekcja = document.querySelector('#compare-models');
+        sekcja.scrollIntoView({
+            behavior: 'smooth'
+        });
 
         // --- GŁÓWNA INICJALIZACJA ---
         window.addEventListener('load', () => {
@@ -1182,68 +1459,91 @@
                     const scrollLeft = Math.ceil(wrapper.scrollLeft);
                     const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
 
-                    // Logika lewej strzałki: aktywna jeśli przewinięto o więcej niż 5px
+                    // Logika lewej strzałki
                     if (scrollLeft > 5) {
                         prevBtn.style.opacity = "1";
                         prevBtn.style.pointerEvents = "auto";
                         prevBtn.style.cursor = "pointer";
                     } else {
                         prevBtn.style.opacity = "0.3";
-                        prevBtn.style.pointerEvents = "none";
-                        prevBtn.style.cursor = "default";
+                        // Zmieniamy kursor na 'not-allowed' zamiast blokować pointer-events, 
+                        // aby kursor był widoczny po najechaniu
+                        prevBtn.style.pointerEvents = "auto";
+                        prevBtn.style.cursor = "not-allowed";
                     }
 
-                    // Logika prawej strzałki: ukryj jeśli jesteśmy na końcu
+                    // Logika prawej strzałki
                     if (scrollLeft >= maxScroll - 5) {
                         nextBtn.style.opacity = "0.3";
-                        nextBtn.style.pointerEvents = "none";
+                        nextBtn.style.pointerEvents = "auto";
+                        nextBtn.style.cursor = "not-allowed";
                     } else {
                         nextBtn.style.opacity = "1";
                         nextBtn.style.pointerEvents = "auto";
+                        nextBtn.style.cursor = "pointer";
                     }
                 };
 
                 nextBtn.onclick = () => {
+                    // Sprawdzamy czy kursor nie jest 'not-allowed' przed wykonaniem scrolla
+                    if (nextBtn.style.cursor === "not-allowed") return;
+
                     wrapper.scrollBy({
-                        left: wrapper.clientWidth * 0.8,
+                        left: 600,
                         behavior: 'smooth'
                     });
-                    // Wymuszamy aktualizację po krótkiej chwili (na czas animacji)
                     setTimeout(updateButtons, 500);
                 };
 
                 prevBtn.onclick = () => {
+                    if (prevBtn.style.cursor === "not-allowed") return;
+
                     wrapper.scrollBy({
-                        left: -(wrapper.clientWidth * 0.8),
+                        left: -600,
                         behavior: 'smooth'
                     });
                     setTimeout(updateButtons, 500);
                 };
 
-                // Nasłuchiwanie na scroll
                 wrapper.addEventListener('scroll', updateButtons);
-
-                // Wywołanie na starcie, żeby ustawić strzałki
                 updateButtons();
             });
         }
 
         // Reveal Observer
         const revealItems = document.querySelectorAll('.reveal');
+
         const revealObs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObs.unobserve(entry.target);
+                    // Jeśli to kontener galerii, aktywuj wszystkie reveal w środku
+                    if (entry.target.classList.contains('gallery-container')) {
+                        const innerReveals = entry.target.querySelectorAll('.reveal');
+                        innerReveals.forEach(item => item.classList.add('active'));
+                        revealObs.unobserve(entry.target);
+                    } else {
+                        // Standardowe zachowanie dla pojedynczych elementów
+                        entry.target.classList.add('active');
+                        revealObs.unobserve(entry.target);
+                    }
                 }
             });
         }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
 
         revealItems.forEach(item => {
-            if (item.getBoundingClientRect().top < window.innerHeight * 0.1) {
-                item.classList.add('active');
+            // Sprawdź, czy element jest wewnątrz galerii
+            const parentGallery = item.closest('.gallery-container');
+
+            if (parentGallery) {
+                // Jeśli jest w galerii, obserwujemy całą galerię zamiast pojedynczego obrazka
+                revealObs.observe(parentGallery);
             } else {
-                revealObs.observe(item);
+                // Jeśli jest luzem na stronie, sprawdź pozycję startową
+                if (item.getBoundingClientRect().top < window.innerHeight * 0.1) {
+                    item.classList.add('active');
+                } else {
+                    revealObs.observe(item);
+                }
             }
         });
 
@@ -1268,6 +1568,169 @@
                 entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
             }, { threshold: 0.5 }).observe(samsungSec);
         }
+
+        const container = document.getElementById('magic-container');
+        const icon = document.getElementById('status-icon');
+        const content = document.getElementById('expanded-ui-content');
+        const zone = document.getElementById('trigger-zone');
+
+        const CONFIG = {
+            margin: 175,
+            targetBottom: 140,
+            fullWidth: 340,
+            bubbleSize: 56
+        };
+
+        const STATE = {
+            hasTriggered: false,
+            isLatched: false,
+            introTimeline: null,
+            isFullyHidden: true
+        };
+
+        function getSafeClampedBottom(requestedBottom) {
+            const zoneRect = zone.getBoundingClientRect();
+            const winH = window.innerHeight;
+            const conH = container.offsetHeight;
+            const bottomLimit = winH - zoneRect.bottom + CONFIG.margin;
+            const topLimit = winH - zoneRect.top - conH - CONFIG.margin;
+            return Math.min(Math.max(requestedBottom, bottomLimit), topLimit);
+        }
+
+        function handlePositionRefresh() {
+            if (STATE.hasTriggered && !STATE.isLatched) return;
+
+            const safeBottom = getSafeClampedBottom(CONFIG.targetBottom);
+            gsap.set(container, { bottom: safeBottom });
+
+            const zoneRect = zone.getBoundingClientRect();
+            if (zoneRect.bottom < 0 || zoneRect.top > window.innerHeight) {
+                if (!STATE.isFullyHidden) {
+                    gsap.to(container, { opacity: 0, scale: 0.8, duration: 0.4, ease: "power2.inOut" });
+                    STATE.isFullyHidden = true;
+                }
+            } else {
+                if (STATE.isFullyHidden && STATE.isLatched) {
+                    gsap.to(container, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" });
+                    STATE.isFullyHidden = false;
+                }
+            }
+        }
+
+        function initiateSacredSequence() {
+            if (STATE.hasTriggered) return;
+            STATE.hasTriggered = true;
+            STATE.isFullyHidden = false;
+
+            gsap.killTweensOf([container, icon, content]);
+
+            // PUNKT ZERO - Bardziej "skoncentrowany" start
+            gsap.set(container, {
+                opacity: 0,
+                bottom: -100,
+                width: CONFIG.bubbleSize,
+                scaleX: 0.5,
+                scaleY: 1.5,
+                filter: "blur(10px)"
+            });
+
+            STATE.introTimeline = gsap.timeline({
+                onComplete: () => {
+                    STATE.isLatched = true;
+                    handlePositionRefresh();
+                },
+                onReverseComplete: () => {
+                    STATE.hasTriggered = false;
+                    STATE.isLatched = false;
+                    STATE.isFullyHidden = true;
+                    gsap.set(container, { opacity: 0 });
+                }
+            });
+
+            STATE.introTimeline
+                // 1. WYSTRZAŁ (The Pop)
+                .to(container, {
+                    opacity: 1,
+                    bottom: 200,
+                    scaleX: 1.1,
+                    scaleY: 0.9,
+                    filter: "blur(0px)",
+                    duration: 0.7,
+                    ease: "expo.out"
+                })
+                // 2. ROZSZERZENIE (The Expansion) z fizyką galarety
+                .to(container, {
+                    width: CONFIG.fullWidth,
+                    bottom: CONFIG.targetBottom,
+                    scaleX: 1,
+                    scaleY: 1,
+                    duration: 1.4,
+                    ease: "elastic.out(1, 0.6)"
+                }, 0.4)
+                // 3. IKONA - płynne przesunięcie na bok
+                .to(icon, {
+                    left: "calc(100% - 32px)",
+                    scale: 0.8,
+                    duration: 1.2,
+                    ease: "elastic.out(1, 0.7)"
+                }, 0.5)
+                // 4. TREŚĆ - Fade + Slide + Unblur
+                .to(content, {
+                    opacity: 1,
+                    filter: "blur(0px)",
+                    x: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                }, 0.7)
+                // 5. EFEKT POŁYSKU (Shine)
+                .to("#magic-container", {
+                    onStart: () => {
+                        gsap.fromTo("#magic-container",
+                            { "--shine-pos": "-150%" },
+                            { keyframes: [{ "--shine-pos": "150%" }], duration: 1 }
+                        );
+                    }
+                }, 0.6);
+
+            // Dodajemy dynamiczny "oddech" (Idle)
+            STATE.introTimeline.add(() => {
+                if (!STATE.introTimeline.reversed()) {
+                    const idleTl = gsap.timeline({ repeat: -1, yoyo: true });
+                    idleTl.to(container, {
+                        y: -8,
+                        duration: 2.5,
+                        ease: "sine.inOut"
+                    });
+                    idleTl.to(container, {
+                        boxShadow: "0 40px 70px -15px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.6)",
+                        duration: 2.5,
+                        ease: "sine.inOut"
+                    }, 0);
+                }
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!STATE.hasTriggered) initiateSacredSequence();
+                    else if (STATE.introTimeline?.reversed()) STATE.introTimeline.play();
+                } else {
+                    if (STATE.hasTriggered && !STATE.isLatched) STATE.introTimeline.reverse();
+                }
+            });
+        }, { threshold: 0.001 });
+
+        observer.observe(zone);
+        window.addEventListener('scroll', handlePositionRefresh, { passive: true });
+        window.addEventListener('resize', handlePositionRefresh);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialRect = zone.getBoundingClientRect();
+            if (initialRect.top < window.innerHeight && initialRect.bottom > 0) {
+                initiateSacredSequence();
+            }
+        });
     });
 </script>
 </body>
