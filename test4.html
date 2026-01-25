@@ -4,601 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple & Samsung AI Section</title>
+    <meta name="title" content="Samsung AI - Prezentacja Premium">
+    <meta name="description" content="Interaktywna prezentacja możliwości AI w najnowszych urządzeniach. Poznaj przyszłość technologii z procesorem Galaxy AI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://panpietruszka.github.io/presentation/test4.html">
+    <meta property="og:title" content="Samsung AI - Prezentacja Premium">
+    <meta property="og:description" content="Zobacz, jak technologia AI zmienia sposób, w jaki korzystamy z urządzeń. Projekt stworzony z dbałością o każdy detal.">
+    <meta property="og:image" content="images/preview.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://panpietruszka.github.io/presentation/test4.html">
+    <meta property="twitter:title" content="Apple & Samsung AI - Prezentacja Premium">
+    <meta property="twitter:description" content="Interaktywna prezentacja możliwości AI. Design klasy światowej.">
+    <meta property="twitter:image" content="images/twoja-miniaturka.jpg">
+    <title>Galaxy Book5 Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --c-width: 1200px;
-            --c-height: 600px;
-            --bubble-h: 56px;
-            --apple-blue: #007AFF;
-            --strict-margin: 100px;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #000;
-            overflow-x: hidden;
-            opacity: 0;
-        }
-
-        body.loaded {
-            opacity: 1;
-        }
-
-        body.lock-scroll {
-            overflow: hidden !important;
-            touch-action: none;
-        }
-
-        :root {
-            --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .samsung-container {
-            font-family: 'Inter', sans-serif;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .samsung-container.is-visible {
-            opacity: 1;
-        }
-
-        .word-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.1em;
-            perspective: 1200px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out var(--d, 0s), 
-                        transform 0.8s ease-out var(--d, 0s);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .floor-shadow {
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%) scaleX(0.3) translateY(20px);
-            width: 140%;
-            height: 60px;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 60%);
-            filter: blur(12px);
-            opacity: 0;
-        }
-
-        .is-visible .floor-shadow {
-            animation: floorShadowReveal 2.2s var(--ease-cinematic) 1s forwards;
-        }
-
-        @keyframes floorShadowReveal {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) scaleX(0.3) translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateX(-50%) scaleX(1) translateY(0);
-            }
-        }
-
-        .letter {
-            display: inline-flex;
-            align-items: center;
-            font-size: clamp(3rem, 12vw, 8rem);
-            font-weight: 600;
-            color: #fff;
-            opacity: 0;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
-        }
-
-        .samsung-a {
-            height: 0.72em;
-            width: 0.62em;
-            fill: currentColor;
-            margin: 0 0.1em;
-        }
-
-        .is-visible .letter.from-top {
-            animation: revealFromTop 1.6s var(--ease-cinematic) forwards;
-        }
-
-        .is-visible .letter.from-bottom {
-            animation: revealFromBottom 1.6s var(--ease-cinematic) forwards;
-        }
-
-        @keyframes revealFromTop {
-            0% {
-                opacity: 0;
-                transform: translateY(-120%) rotateX(-25deg);
-                filter: blur(15px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-                filter: blur(0px);
-            }
-        }
-
-        @keyframes revealFromBottom {
-            0% {
-                opacity: 0;
-                transform: translateY(120%) rotateX(25deg);
-                filter: blur(15px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-                filter: blur(0px);
-            }
-        }
-
-
-        .is-visible .letter:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .is-visible .letter:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .is-visible .letter:nth-child(4) {
-            animation-delay: 0.45s;
-        }
-
-        .is-visible .letter:nth-child(5) {
-            animation-delay: 0.6s;
-        }
-
-        .is-visible .letter:nth-child(6) {
-            animation-delay: 0.75s;
-        }
-
-        .is-visible .letter:nth-child(7) {
-            animation-delay: 0.9s;
-        }
-
-
-        .scroll-section {
-            position: relative;
-            width: 100%;
-            height: 150vh;
-        }
-
-        .sticky-wrapper {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-
-        #video-container {
-            position: relative;
-            width: 60%;
-            height: 60vh;
-            border-radius: 60px;
-            overflow: hidden;
-            background-color: #000;
-        }
-
-        #scroll-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        #video-toggle-label {
-            display: flex;
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            z-index: 100;
-            cursor: pointer;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(30, 30, 30, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            fill: white;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container-btn .play,
-        .container-btn .pause {
-            position: absolute;
-            font-size: 24px;
-            animation: keyframes-fill 0.3s;
-        }
-
-        .container-btn .pause {
-            display: none;
-        }
-
-        .container-btn input:checked~.pause {
-            display: block;
-        }
-
-        .container-btn input:checked~.play {
-            display: none;
-        }
-
-        .container-btn input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        @keyframes keyframes-fill {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            scroll-behavior: smooth;
-        }
-
-        .gallery-container {
-            position: relative;
-            max-width: 1400px;
-            margin: 2rem auto;
-            overflow: hidden;
-        }
-
-        .image-wrapper {
-            display: flex;
-            gap: 24px;
-            overflow-x: auto;
-            padding: 0 10%;
-            align-items: flex-start;
-        }
-        .prevBtn, .nextBtn {
-            z-index: 50;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            border-radius: 2rem;
-            background: #eee;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        @media (max-width: 768px) {
-            .gallery-item img {
-                height: 300px;
-            }
-        }
-
-        .item-caption {
-            margin-top: 16px;
-        }
-
-        .nav-controls {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 2rem;
-            padding-right: 10%;
-        }
-
-        .nav-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            color: whitesmoke;
-            margin-bottom: 20px;
-        }
-        .nav-btn-dark {
-            background: #333;
-            border-radius: 1px solid #333;
-        }
-        .nav-btn-light {
-            background: rgb(230, 230, 230);
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-        }
-        
-        .nav-btn-dark:hover:not(:disabled) {
-            border-color: #444;
-            background: #444;
-        }
-
-        .nav-btn-light:hover:not(:disabled) {
-            background: rgb(220, 220, 220);
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .nav-btn svg {
-            width: 28px;
-            height: 28px;
-            fill: none;
-            stroke-width: 2.5;
-        }
-        .nav-btn-dark svg {
-            stroke: currentColor;
-        }
-        .nav-btn-light svg {
-            stroke: rgb(50, 50, 50);
-        }
-
-        .scrolling-section {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-image {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            transform-origin: center center;
-            scale: 1.44;
-        }
-
-        .overlay-text {
-            position: relative;
-            z-index: 10;
-            font-size: clamp(2rem, 8vw, 5rem);
-            font-weight: 800;
-            text-align: center;
-            color: white;
-            transform: translateY(100vh);
-            opacity: 0;
-            max-width: 80%;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            will-change: transform, opacity;
-        }
-
-        .overlay-container {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 5;
-            overflow: hidden;
-
-        }
-
-        .spacer-gsap {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #475569;
-        }
-
-        #text-bundle {
-            opacity: 0;
-            transform: translateY(100vh);
-
-            text-align: center;
-            will-change: transform, opacity;
-        }
-
-        .image-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .scroll-image {
-            position: absolute;
-            height: 70vh;
-            min-width: 125vw;
-            object-fit: cover;
-            opacity: 0;
-            left: 50%;
-            pointer-events: none;
-
-        }
-
-        .image-right {
-            z-index: 5;
-            top: 10vh;
-            transform: translateX(100%);
-        }
-
-        .image-left {
-            z-index: 10;
-            top: 50vh;
-            transform: translateX(-200%);
-        }
-
-        .is-visible .scroll-image {
-            opacity: 1;
-            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
-        }
-
-        .is-visible .image-right {
-            transform: translateX(-37.5%);
-        }
-
-        .is-visible .image-left {
-            transform: translateX(-62.5%);
-        }
-
-        #magic-container {
-            position: fixed;
-            bottom: -400px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: var(--bubble-h);
-            height: var(--bubble-h);
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(30px) saturate(180%) brightness(1.2);
-            -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(1.2);
-            display: flex;
-            align-items: center;
-            box-shadow:
-                0 20px 50px -10px rgba(0, 0, 0, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-            opacity: 0;
-            z-index: 99999;
-            border-radius: 999px;
-            will-change: bottom, width, opacity, transform, filter;
-            cursor: pointer;
-            overflow: hidden;
-            /* Dla efektu połysku */
-        }
-
-        /* Efekt połysku (Shine) */
-        #magic-container::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.4),
-                    transparent);
-            transform: skewX(-20deg);
-            pointer-events: none;
-        }
-
-        .inner-container-layout {
-            position: relative;
-            width: 110%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        #status-icon {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            width: 44px;
-            height: 44px;
-            background: var(--apple-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-        }
-
-        #expanded-ui-content {
-            opacity: 0;
-            padding-left: 28px;
-            padding-right: 60px;
-            width: 100%;
-            pointer-events: none;
-            filter: blur(10px);
-            /* Startowe rozmycie do animacji */
-        }
-
-        .page-buffer {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d1d1d6;
-            font-weight: 200;
-            font-size: 3rem;
-            letter-spacing: -0.02em;
-        }
-
-        #trigger-zone {
-            height: 255vh;
-            background: #ffffff;
-            position: relative;
-        }
-
-        .visual-guide {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: rgba(0, 122, 255, 0.1);
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .guide-top {
-            top: var(--strict-margin);
-        }
-
-        .guide-bottom {
-            bottom: var(--strict-margin);
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/icons/samsung-knox-logo.png" type="image/x-icon">
 </head>
 
 <body class="bg-black">
@@ -609,11 +34,11 @@
             <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Built for AI.</h1>
             <h1 class="text-[80px] leading-tight font-semibold mb-16 reveal" style="--d: 0.4s">From the silicon up.</h1>
             <p class="text-2xl font-semibold text-gray-400 reveal" style="--d: 0.6s">
-                Apple silicon, and every major subsystem that powers it, is designed for AI — creating a platform that
-                comprehensively
-                unites hardware, software, and ecosystem. So you can run demanding on-device AI workloads with
-                incredible power
-                efficiency. Always knowing that security and privacy are designed in, not just bolted on.
+                Intel Lunar Lake, and every major subsystem that powers it, is reimagined for the age of AI — creating a platform that
+                comprehensively unites high-performance silicon, the Windows 11 Copilot+ experience, and the Samsung Galaxy ecosystem.
+                It enables you to run demanding on-device AI workloads with a level of power efficiency previously thought impossible
+                for the x86 architecture. Always knowing that security and privacy are built into the very fabric of the processor,
+                ensuring your data remains yours and yours alone.
             </p>
         </div>
 
@@ -621,9 +46,8 @@
             <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col reveal">
                 <div class="p-10">
                     <p class="text-2xl font-semibold">
-                        AI apps on Mac. Born to run. Mac is optimized to handle the world’s most advanced AI apps.
-                        Run image generation apps like DiffusionBee,
-                        LLM apps like Msty Studio and LM Studio, and video enhancement apps like Topaz Video.
+                        AI apps on Galaxy Book. Built to lead. Galaxy Book is optimized for the next generation of AI. Run image generators like
+                        Stable Diffusion, LLM tools like LM Studio, and video enhancers like Topaz Video with the power of Lunar Lake.
                     </p>
                 </div>
                 <img src="images/Samsung-Mobile-Galaxy-Book5-Pro-360-User-Guide-AI-PC_main11 (1)_Nero_AI_Image_Upscaler_Standard.png"
@@ -632,8 +56,9 @@
             <div class="bg-[#111] rounded-3xl overflow-hidden flex flex-col reveal">
                 <div class="p-10">
                     <p class="text-2xl font-semibold">
-                        AI tools in apps. Mac makes magic. Transform vocals with AI plug-ins like MicDrop for Logic Pro.
-                        And make complex image modifications in seconds with Generative Fill in Adobe Photoshop.
+                        AI tools in apps. Galaxy Book makes magic. Transform audio with AI-powered plug-ins in Adobe Audition. And make complex
+                        image modifications in seconds with Generative Fill in Adobe Photoshop, accelerated by the dedicated NPU of the Lunar
+                        Lake processor.
                     </p>
                 </div>
                 <img src="images/Samsung-Mobile-Galaxy-Book5-Pro-360-User-Guide-AI-PC_main11_Nero_AI_Image_Upscaler_Standard.png"
@@ -641,20 +66,17 @@
             </div>
         </div>
 
-        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32">
-            <h1
-                class="w-fit text-[56px] pb-6 font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,#1B88F6,#C65CEA,#E24A88,#EA5711)] reveal" style="--d: 0.2s">
-                Apple Intelligence.</h1>
-            <h1 class="text-[56px] leading-tight font-semibold mb-16 reveal" style="--d: 0.4s">Task and you shall receive.</h1>
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32" id="Galaxy-AI">
+            <h1 class="w-fit text-[56px] pb-6 font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,#1B88F6,#C65CEA,#E24A88,#EA5711)] reveal"
+                style="--d: 0.2s">
+                Galalxy AI</h1>
+            <h1 class="text-[56px] leading-tight font-semibold mb-16 reveal" style="--d: 0.4s">Task and you shall
+                receive.</h1>
             <p class="text-2xl font-semibold text-gray-400 reveal" style="--d: 0.6s">
-                Apple Intelligence helps you write, express yourself, and get things done effortlessly. Turn a quick
-                note into a
-                polished announcement. Remove distractions from photos with Clean Up. Create unique images with new
-                ChatGPT styles in
-                Image Playground. And use intelligent actions in the Shortcuts app to create automations — like
-                comparing an audio
-                transcription to typed notes and extracting information from a PDF. Apple Intelligence is AI — for you
-                and I
+                Galaxy AI helps you write, express yourself, and get things done effortlessly. Turn a quick note into a polished
+                announcement. Remove distractions from photos with Object Eraser. Create unique images with generative tools in Samsung
+                Studio. And use intelligent actions in the Galaxy ecosystem to create workflows — like comparing a voice recording
+                transcript to S Notes and extracting info from a PDF. Galaxy AI is AI — for you.
             </p>
         </div>
 
@@ -680,20 +102,16 @@
             </div>
         </div>
         <p class="text-2xl font-semibold text-gray-400 w-[75%] text-center mt-32">
-            Apple Intelligence is designed to protect your privacy at every step. It’s integrated into the core of your
-            Mac
-            through
-            on-device processing. So it’s aware of your personal information without collecting your personal
-            information. And
-            with
-            groundbreaking Private Cloud Compute, Apple Intelligence can draw on larger server-based models, running on
-            Apple
-            silicon, to handle more complex requests for you while protecting your privacy.
+            Galaxy AI is designed to protect your privacy at every step. It’s integrated into the core of your Galaxy Book through
+            on-device processing. So it’s aware of your personal information without collecting your personal information. And with
+            groundbreaking Samsung Knox Matrix, Galaxy AI can draw on secure cloud-based models, running on trusted infrastructure,
+            to handle more complex requests for you while protecting your privacy.
         </p>
 
-        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64">
+        <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64" id="battery-section">
             <h3 class="mb-12 reveal">Battery</h3>
-            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">All-day battery life. <br>Think outside the outlet.</h1>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">All-day battery life. <br>Think
+                outside the outlet.</h1>
         </div>
 
     </div>
@@ -705,27 +123,27 @@
     <div class="container mx-auto flex flex-col items-center py-20">
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
             <p class="text-2xl font-semibold text-gray-400 mb-32 reveal">
-                MacBook Pro has the longest battery life ever in a Mac — up to 24 hours — and supports fast charge,
-                allowing it to
-                charge up to 50 percent in just 30 minutes.48 All models provide the same performance whether they’re
-                plugged in or
-                not,
-                so you can spend more time thinking about an outlet for your passion, not your laptop.
+                Galaxy Book5 Pro 360 has the longest battery life ever in a Galaxy Book — up to 25 hours — and supports Super Fast
+                Charging, allowing it to charge up to 35 percent in just 30 minutes. All models provide the same consistent performance
+                whether they’re plugged in or not, so you can spend more time thinking about an outlet for your passion, not your
+                laptop.
             </p>
             <div class="flex gap-10">
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 block"></span>
                     <p class="text-[15px] reveal">Up to</p>
-                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent reveal" style="--d: 0.2s">24 hours
+                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent reveal"
+                        style="--d: 0.2s">24 hours
                     </p>
                     <p class="text-[15px] reveal" style="--d: 0.4s">battery life</p>
                 </div>
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 flex"></span>
                     <p class="text-[15px] reveal">Up to</p>
-                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent reveal" style="--d: 0.2s">14 more
+                    <p class="text-6xl bg-gradient-to-r from-[#fff] to-[#88B6BD] bg-clip-text text-transparent reveal"
+                        style="--d: 0.2s">14 more
                         hours</p>
-                    <p class="text-[15px] reveal" style="--d: 0.4s">than Intel-based MacBook Pro</p>
+                    <p class="text-[15px] reveal" style="--d: 0.4s">than previous generation</p>
                 </div>
             </div>
         </div>
@@ -756,12 +174,9 @@
     <div class="container mx-auto flex flex-col items-center py-20">
         <div class="wrapper w-[65%] ">
             <p class="text-2xl font-semibold text-gray-400 mb-32 reveal">
-                MacBook Pro has the longest battery life ever in a Mac — up to 24 hours — and supports fast charge,
-                allowing it to
-                charge up to 50 percent in just 30 minutes.48 All models provide the same performance whether they’re
-                plugged in or
-                not,
-                so you can spend more time thinking about an outlet for your passion, not your laptop.
+                Galaxy Book5 Pro 360 has the longest battery life ever in a Galaxy Book — up to 25 hours — and supports fast charging,
+                allowing it to charge up to 35 percent in just 30 minutes. All models provide the same consistent performance whether
+                they’re plugged in or not, so you can spend more time thinking about an outlet for your passion, not your laptop.
             </p>
         </div>
     </div>
@@ -770,43 +185,44 @@
         <div class="image-wrapper no-scrollbar imageWrapper">
 
             <figure class="gallery-item reveal w-[80vw] md:w-[800px]" style="--d: 0s">
-                <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
+                <img src="images/Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
-                        do najczęściej używanych aplikacji, ostatnich dokumentów oraz
-                        szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując czysty
-                        i zorganizowany punkt
-                        startowy do pracy z systemem.</p>
+                    <p class="text-2xl font-semibold text-gray-400">
+                        A bright, minimalist search panel with access to your most-used apps, recent documents, and rapid search suggestions.
+                        The window floats over the center of the desktop, offering a clean and organized starting point for your work with the
+                        Galaxy Book ecosystem.
+                    </p>
                 </figcaption>
             </figure>
 
             <figure class="gallery-item reveal w-[60vw] md:w-[400px]" style="--d: 0.2s">
-                <img src="images\maxresdefault.jpg" alt="Las">
+                <img src="images/maxresdefault.jpg" alt="Las">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
-                        rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
-                        To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w systemie.
+                    <p class="text-2xl font-semibold text-gray-400">
+                        Centrally placed app miniatures on a blurred background allow for instantaneous switching between tasks. This is a key
+                        multitasking tool that significantly enhances work organization within the Galaxy Book ecosystem.
                     </p>
                 </figcaption>
             </figure>
 
             <figure class="gallery-item reveal w-[70vw] md:w-[600px]" style="--d: 0.4s">
-                <img src="images\Screenshot-3.png" alt="Wodospad">
+                <img src="images/Screenshot-3.png" alt="Wodospad">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
-                        aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
-                        półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska tapeta
-                        o abstrakcyjnym
-                        kształcie fali.</p>
+                    <p class="text-2xl font-semibold text-gray-400">
+                        The Windows 11 taskbar with colorful app icons against a dark background. Above it sits a minimalist, translucent volume
+                        control panel. The entire look is completed by the signature blue wallpaper featuring an abstract wave shape on the
+                        Galaxy Book screen.
+                    </p>
                 </figcaption>
             </figure>
 
             <figure class="gallery-item reveal w-[50vw] md:w-[450px]" style="--d: 0.6s">
-                <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
+                <img src="images/MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
-                        błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
-                        Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
+                    <p class="text-2xl font-semibold text-gray-400">
+                        Interactive Glassmorphism-style cards provide instantaneous access to multimedia and documents within a single window.
+                        The minimalist design with rounded details highlights the modern character of the Galaxy Book interface.
+                    </p>
                 </figcaption>
             </figure>
 
@@ -829,13 +245,12 @@
     <div class="container mx-auto flex flex-col items-center">
         <div class="wrapper text-white text-3xl font-medium w-[65%]">
             <h3 class="mb-12 reveal">Battery</h3>
-            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">All-day battery life. <br>Think outside the outlet.</h1>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">All-day battery life. <br>Think
+                outside the outlet.</h1>
             <p class="text-2xl font-semibold text-gray-400 mt-16 reveal" style="--d: 0.4s">
-                Mac and iPhone are incredible on their own. But when you use them together, they work wonders. Thanks to
-                Continuity, you
-                can move seamlessly across devices to share files and photos, hand off tasks, and even control your
-                iPhone from your
-                Mac.
+                Galaxy Book and Galaxy phone are incredible on their own. But when you use them together, they work wonders. Thanks to
+                Galaxy Connected Experience, you can move seamlessly across devices to share files and photos, hand off tasks, and even
+                control your phone from your Galaxy Book.
             </p>
         </div>
         <div class="image-wrapper overflow-hidden mt-12">
@@ -843,16 +258,17 @@
         </div>
         <div class="wrapper text-white text-3xl font-medium w-[65%] mt-64 mb-32">
             <h3 class="mb-12 reveal">Apps</h3>
-            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Your ambitions <br> There's an app for that</h1>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Your ambitions <br> There's an
+                app for that</h1>
             <p class="text-2xl font-semibold text-gray-400 mt-16 reveal" style="--d: 0.4s">
-                Tens of thousands of apps are optimized for Apple silicon — from your go-to productivity apps to your
-                favorite games and
-                hardest-working pro apps. With MacBook Pro, they all soar.
+                Millions of apps are ready to run on Galaxy Book5 Pro — from your go-to productivity tools to your favorite games and
+                hardest-working pro apps. Because it’s powered by Intel Lunar Lake, everything works natively with no compatibility
+                compromises. With Galaxy Book, they all soar.
             </p>
         </div>
     </div>
     <div id="animation-trigger" class="scrolling-section">
-        <img src="images\front-looking_Nero_AI_Image_Upscaler_Standard.png" alt="Widok natury" class="hero-image"
+        <img src="images/front-looking_Nero_AI_Image_Upscaler_Standard.png" alt="Widok natury" class="hero-image"
             id="main-img">
 
         <div class="overlay-container">
@@ -884,43 +300,46 @@
         <div class="image-wrapper no-scrollbar imageWrapper">
 
             <figure class="gallery-item w-[80vw] md:w-[800px] reveal">
-                <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
+                <img src="images/Galaxy-Book5-Pro_Color_selection_Gray_14inch_UK_PC.webp" alt="Góry">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
-                        do najczęściej używanych aplikacji, ostatnich dokumentów oraz
-                        szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując czysty
-                        i zorganizowany punkt
-                        startowy do pracy z systemem.</p>
+                    <p class="text-2xl font-semibold text-gray-400">
+                        A sleek, high-performance laptop featuring a minimalist gray aluminum finish and a stunning edge-to-edge display. The
+                        expansive trackpad and backlit keyboard are designed for precision, while the vibrant Windows 11 interface showcases the
+                        power of the Galaxy Book5 Pro.
+                    </p>
                 </figcaption>
             </figure>
 
             <figure class="gallery-item w-[60vw] md:w-[400px] reveal" style="--d: 0.2s">
-                <img src="images\maxresdefault.jpg" alt="Las">
+                <img src="images/keyboard-looking.avif" alt="Las">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
-                        rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
-                        To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w systemie.
+                    <p class="text-2xl font-semibold text-gray-400">
+                        With the dedicated Copilot key, Galaxy Book5 Pro brings the power of a Copilot+ PC directly to your workflow. Instantly
+                        access intelligent assistance to summarize documents, draft emails, or spark your creativity, all accelerated by the
+                        next-gen NPU of the Intel Lunar Lake processor.
                     </p>
                 </figcaption>
             </figure>
 
             <figure class="gallery-item w-[70vw] md:w-[600px] reveal" style="--d: 0.4s">
-                <img src="images\Screenshot-3.png" alt="Wodospad">
+                <img src="images/1745210508-621.jpeg" alt="Wodospad">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
-                        aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
-                        półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska tapeta
-                        o abstrakcyjnym
-                        kształcie fali.</p>
+                    <p class="text-2xl font-semibold text-gray-400">
+                        Galaxy Book5 Pro 360 features a versatile 2-in-1 design that bends over backward for your creativity. Its sturdy
+                        360-degree hinge allows it to transition effortlessly from a powerful laptop to a spacious tablet, perfect for sketching
+                        or presenting with the included S Pen.
+                    </p>
                 </figcaption>
             </figure>
 
             <figure class="gallery-item w-[50vw] md:w-[450px] reveal" style="--d: 0.6s">
-                <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
+                <img src="images/design-looking.jpg" alt="design-looking">
                 <figcaption class="item-caption">
-                    <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
-                        błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
-                        Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
+                    <p class="text-2xl font-semibold text-gray-400">
+                        The Galaxy Book5 Pro 360 features a versatile 2-in-1 design with a sturdy 360-degree hinge that lets you bend the screen
+                        back for a tablet experience or a convenient tent mode. Its stunning 16-inch 3K Dynamic AMOLED 2X touchscreen delivers
+                        vibrant colors, smooth 120Hz scrolling, and reduced glare thanks to its anti-reflective coating.
+                    </p>
                 </figcaption>
             </figure>
 
@@ -939,28 +358,28 @@
             </button>
         </div>
     </div>
-    <div class="container mx-auto flex flex-col items-center pt-20">
+    <div class="container mx-auto flex flex-col items-center pt-20" id="ports-connectivity">
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
             <h3 class="reveal">Ports and Connectivity</h3>
-            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Make powerful <br>connections.</h1>
+            <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">Make powerful <br>connections.
+            </h1>
             <p class="text-2xl font-semibold text-gray-400 reveal" style="--d: 0.4s">
-                MacBook Pro packs an array of ports for connecting high-speed peripherals, driving high-resolution
-                displays, or directly
-                offloading SDXC cards. Models with the M5 chip feature Thunderbolt 4. Models with M4 Pro or M4 Max
-                feature Thunderbolt
-                5, which offers transfer speeds of up to 120Gb/s.51
+                Galaxy Book5 Pro packs an array of ports for connecting high-speed peripherals, driving high-resolution displays, or
+                directly offloading microSD cards. All models feature HDMI 2.1 and two Thunderbolt 4 ports, which offer lightning-fast
+                data transfers and effortless docking. With dedicated USB-A and card reader slots, you can connect your world without
+                the need for extra dongles.
                 <br><br>
-                MacBook Pro also supports both Wi-Fi 6E52 and Bluetooth 5.3 to connect to the internet and your wireless
-                devices.
+                Galaxy Book5 Pro also supports both Wi-Fi 7 and Bluetooth 5.4 to connect to the internet and your wireless devices with
+                lightning speed.
             </p>
         </div>
     </div>
     <div class="image-section -translate-y-[30%]" id="animation-wrapper">
         <div id="trigger-point" class=""></div>
 
-        <img src="left-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 1" class="scroll-image image-right">
+        <img src="images/left-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 1" class="scroll-image image-right">
 
-        <img src="right-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 2" class="scroll-image image-left">
+        <img src="images/right-side-looking_Nero_AI_Image_Upscaler_Photo.png" alt="Obraz 2" class="scroll-image image-left">
     </div>
     <div class="container mx-auto flex flex-col items-center -translate-y-[7.5%]">
         <div class="wrapper text-white text-3xl font-medium w-[65%] mb-32">
@@ -972,9 +391,10 @@
                 </div>
                 <div class="flex-1">
                     <span class="h-[2px] w-full bg-gradient-to-r from-[#fff] to-[#88B6BD] mb-4 flex"></span>
-                    <p class="text-3xl font-semibold text-gray-400">Drive external displays. Connect up to two
-                        high-resolution external displays with M5 and M4 Pro, or up to four
-                        high-resolution displays with M4 Max.</p>
+                    <p class="text-3xl font-semibold text-gray-400">
+                        Drive external displays. Connect up to two high-resolution external displays with the Galaxy Book5 Pro, or even more
+                        through Thunderbolt docks powered by the advanced Intel Lunar Lake graphics engine.
+                    </p>
                 </div>
             </div>
         </div>
@@ -983,31 +403,29 @@
             <h1 class="text-[80px] leading-tight font-semibold reveal" style="--d: 0.2s">No compromises.</h1>
         </div>
         <div class="wrapper flex justify-center items-center h-screen -translate-y-[15%]">
-            <img src="images\SDSAC-10137-Book5-Pro_16_US_Gray_002_Top-Open_RGB-1600x1200_Nero_AI_Image_Upscaler_Photo.png"
+            <img src="images/SDSAC-10137-Book5-Pro_16_US_Gray_002_Top-Open_RGB-1600x1200_Nero_AI_Image_Upscaler_Photo.png"
                 class="w-full object-cover">
         </div>
         <div class="wrapper text-white text-xl font-medium w-[75%] mb-32">
             <p class="text-2xl font-semibold text-gray-400 text-center reveal">
-                <span class="text-white">Security starts with Apple silicon</span> and extends to the macOS
-                architecture. This deep integration of hardware and software
-                along with automatic software updates helps keep MacBook Pro stable and protected for the long term. The
-                security
-                architecture also powers features such as Touch ID, Find My, and advanced defenses that protect against
-                viruses and
-                malware.
+                <span class="text-white">Security starts with Intel Lunar Lake</span> 
+                and extends to the Samsung Knox architecture. This deep integration of hardware and software along with automatic
+                software updates helps keep Galaxy Book stable and protected for the long term. The security architecture also powers
+                features such as Fingerprint ID, SmartThings Find, and advanced defenses that protect against viruses and malware.
             </p>
             <div class="flex gap-10 mt-16">
                 <div class="flex-1 flex flex-col items-start text-xl">
                     <img src="images/icons/fingerprint.png" alt="" class="icon w-16 h-16 object-cover mb-4 reveal">
-                    <p class="font-semibold text-gray-400 text-xl reveal" style="--d: 0.2s">Touch ID. Unlock your Mac, sign in to apps, and make
-                        secure payments with your fingertip. The Secure Enclave keeps your
-                        fingerprint data safe.</p>
+                    <p class="font-semibold text-gray-400 text-xl reveal" style="--d: 0.2s">
+                        Fingerprint ID. Unlock your Galaxy Book, sign in to apps, and make secure payments with your fingertip. The Samsung Knox
+                        security chip keeps your fingerprint data safe.
+                    </p>
                 </div>
                 <div class="flex-1 flex flex-col items-start">
                     <img src="images/icons/apps.311.13841252692681885.82e4c6e4-17fa-46ed-96a8-3bc6ee0872ef.png" alt=""
                         class="icon w-16 h-16 object-cover mb-4 reveal">
                     <p class="font-semibold text-gray-400 reveal" style="--d: 0.2s">
-                        Find My. Locate your misplaced MacBook Pro and remotely lock or erase it if needed.
+                        SmartThings Find. Locate your misplaced Galaxy Book and remotely lock or erase it if needed.
                     </p>
                 </div>
                 <div class="flex-1 flex flex-col items-start">
@@ -1143,41 +561,42 @@
                 </div>
             </div>
         </div>
-        <div class="wrapper text-white text-3xl font-medium w-[75%]">
-            <h1 class="text-[86px] leading-tight font-semibold text-center reveal">There’s never been a better time to upgrade.
+        <div class="wrapper text-white text-3xl font-medium w-[75%]" id="upgrade-zone">
+            <h1 class="text-[86px] leading-tight font-semibold text-center reveal">There’s never been a better time to
+                upgrade.
             </h1>
             <h3 class="text-3xl text-gray-400 mt-16 reveal" style="--d: 0.2s">Here's what you can get with the new <span
-                    class="text-white">14-inch MacBook Pro with M5</span></h3>
+                    class="text-white">16-inch Samsung Galaxy Book5 Pro</span></h3>
         </div>
         <div class="wrapper text-white text-3xl font-medium w-[90%] flex items-center justify-center mt-12">
             <div style="width: var(--c-width); height: var(--c-height);" class="gap-5 max-w-[95vw] flex">
 
                 <div class="flex-1 flex flex-col gap-5">
-                    <div
-                        class="h-[60%] w-full bg-[url('images/upgraders_intel_1__c2uwtldp88mu_large.jpg')] bg-cover bg-center rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10 reveal" style="--d: 0.4s">
+                    <div class="h-[60%] w-full bg-[url('images/upgraders_intel_1__c2uwtldp88mu_large.jpg')] bg-cover bg-center rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10 reveal"
+                        style="--d: 0.4s">
                         <img src="images/icon_sparkles__crqv6fji0x26_large.png" alt="sparkles">
-                        <h3 class="text-5xl text-white">7x faster than i7-920 in all tasks.</h3>
+                        <h3 class="text-5xl text-white">2x faster that book4 Pro.</h3>
                     </div>
-                    <div
-                        class="h-[40%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex items-center justify-start pl-10 gap-10 reveal" style="--d: 0.6s">
+                    <div class="h-[40%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex items-center justify-start pl-10 gap-10 reveal"
+                        style="--d: 0.6s">
                         <img src="images/icon_xdr_display__yb78ajay2qaa_large.png" alt="sun" class="scale-125">
                         <h3
                             class="text-4xl text-white font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif] max-w-[45%]">
-                            A stunning Liquid Retina XDR display.</h3>
+                            A stunning Dynamic AMOLED 2X display.</h3>
                     </div>
                 </div>
 
                 <div class="flex-1 flex flex-col gap-5">
-                    <div
-                        class="h-[40%] w-full bg-gray-900 rounded-[32px] shadow-xl flex items-center justify-start pl-10 reveal" style="--d: 0.6s">
+                    <div class="h-[40%] w-full bg-gray-900 rounded-[32px] shadow-xl flex items-center justify-start pl-10 reveal"
+                        style="--d: 0.6s">
                         <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp"
                             alt="galaxy ai" class="w-48 h-48 object-cover">
                         <h3
                             class="text-4xl text-gray-400 font-['SamsungOne',__Roboto',_'Helvetica_Neue',_Arial,_sans-serif]">
                             Galaxy AI</h3>
                     </div>
-                    <div
-                        class="h-[60%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10 reveal" style="--d: 0.4s">
+                    <div class="h-[60%] w-full bg-[#1D1D1F] rounded-[32px] shadow-xl flex flex-col items-start justify-center p-10 reveal"
+                        style="--d: 0.4s">
                         <img src="images/icon_battery_life__erphl3wwf0sy_large.png" alt="sparkles">
                         <h3 class="text-5xl text-white">Up to <span
                                 class="text-transparent bg-clip-text bg-gradient-to-r from-[#36AA87] to-[#6DD400]">7
@@ -1189,550 +608,236 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col items-start px-20 py-20 bg-white text-black">
+    <div class="flex flex-col items-start px-20 py-20 bg-[var(--smoked-white)] text-black">
         <div class="wrapper text-3xl font-medium w-full md:w-[65%] mb-32">
-            <h1 class="text-6xl text-left">Why Apple is the best <br> place to buy Mac</h1>
+            <h1 class="text-6xl text-left">Why Samsung is the best <br> place to buy Book</h1>
         </div>
-            <div class="gallery-container">
-                <div class="image-wrapper no-scrollbar imageWrapper">
-            
-                    <figure class="gallery-item reveal w-[80vw] md:w-[800px]" style="--d: 0s">
-                        <img src="images\Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
-                        <figcaption class="item-caption">
-                            <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z dostępem
-                                do najczęściej używanych aplikacji, ostatnich dokumentów oraz
-                                szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując czysty
-                                i zorganizowany punkt
-                                startowy do pracy z systemem.</p>
-                        </figcaption>
-                    </figure>
-            
-                    <figure class="gallery-item reveal w-[60vw] md:w-[400px]" style="--d: 0.1s">
-                        <img src="images\maxresdefault.jpg" alt="Las">
-                        <figcaption class="item-caption">
-                            <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
-                                rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
-                                To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w systemie.
-                            </p>
-                        </figcaption>
-                    </figure>
-            
-                    <figure class="gallery-item reveal w-[70vw] md:w-[600px]" style="--d: 0.2s">
-                        <img src="images\Screenshot-3.png" alt="Wodospad">
-                        <figcaption class="item-caption">
-                            <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi ikonami
-                                aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
-                                półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska tapeta
-                                o abstrakcyjnym
-                                kształcie fali.</p>
-                        </figcaption>
-                    </figure>
-            
-                    <figure class="gallery-item reveal w-[50vw] md:w-[450px]" style="--d: 0.3s">
-                        <img src="images\MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
-                        <figcaption class="item-caption">
-                            <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism zapewniaja
-                                błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
-                                Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.</p>
-                        </figcaption>
-                    </figure>
-            
-                </div>
-            
-                <div class="nav-controls">
-                    <button class="nav-btn prevBtn nav-btn-light" aria-label="Poprzednie">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M15 18l-6-6 6-6" />
-                        </svg>
-                    </button>
-                    <button class="nav-btn nextBtn nav-btn-light" aria-label="Następne">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M9 18l6-6-6-6" />
-                        </svg>
-                    </button>
-                </div>
+        <div class="gallery-container">
+            <div class="image-wrapper no-scrollbar imageWrapper">
+                <figure class="gallery-item reveal w-[80vw] md:w-[800px]" style="--d: 0s">
+                    <img src="images/Hqr5M6GXLwUJtXiAa7JRHm.jpg" alt="Góry">
+                    <figcaption class="item-caption">
+                        <p class="text-2xl font-semibold text-gray-400">Jasny, minimalistyczny panel wyszukiwania z
+                            dostępem
+                            do najczęściej używanych aplikacji, ostatnich dokumentów oraz
+                            szybkich propozycji wyszukiwania. Okno unosi się nad centralną częścią pulpitu, oferując
+                            czysty
+                            i zorganizowany punkt
+                            startowy do pracy z systemem.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item reveal w-[60vw] md:w-[400px]" style="--d: 0.1s">
+                    <img src="images/maxresdefault.jpg" alt="Las">
+                    <figcaption class="item-caption">
+                        <p class="text-2xl font-semibold text-gray-400">Centralnie rozmieszczone miniatury aplikacji na
+                            rozmytym tle umożliwiają błyskawiczne przełączanie się między zadaniami.
+                            To kluczowe narzędzie wielozadaniowości, które znacząco ułatwia organizację pracy w
+                            systemie.
+                        </p>
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item reveal w-[70vw] md:w-[600px]" style="--d: 0.2s">
+                    <img src="images/Screenshot-3.png" alt="Wodospad">
+                    <figcaption class="item-caption">
+                        <p class="text-2xl font-semibold text-gray-400">Pasek zadań systemu Windows 11 z kolorowymi
+                            ikonami
+                            aplikacji na ciemnym tle. Nad nim widoczny jest minimalistyczny,
+                            półprzezroczysty panel regulacji głośności. Całość dopełnia charakterystyczna, niebieska
+                            tapeta
+                            o abstrakcyjnym
+                            kształcie fali.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item reveal w-[50vw] md:w-[450px]" style="--d: 0.3s">
+                    <img src="images/MSFT-Meet-Windows-11-panel-3-feature-1.avif" alt="Jezioro">
+                    <figcaption class="item-caption">
+                        <p class="text-2xl font-semibold text-gray-400">Interaktywne karty w stylu Glassmorphism
+                            zapewniaja
+                            błyskawiczny dostęp do multimediów i dokumentów w jednym oknie.
+                            Minimalistyczny design z zaokrąglonymi detalami podkreśla nowoczesny charakter interfejsu.
+                        </p>
+                    </figcaption>
+                </figure>
+
             </div>
-            <div class="wrapper text-3xl font-medium w-full mb-32">
-                <section id="trigger-zone">
-                    <div class="flex flex-col justify-start h-full">
-                        <h1 class="text-[60px] leading-tight font-semibold reveal py-20" style="--d: 0.2s">Introducing the new Book6 Series</h1>
-                        <img src="images/book6-series.webp" alt="" class="w-fit h-fit">
-                        <div class="compare-models flex justify-center items-center mt-48 gap-10 text-center" id="compare-models">
-                            <div class="first-column w-[600px]">
-                                <h3 class="py-4">Galaxy Book5 Pro 14" and 16"</h3>
-                                <p class="text-xl font-normal py-2">Strikingly thin and fast so you can work, play, or create anywhere.</p>
-                                <p class="text-xl font-semibold py-2">From $999</p>
-                                <div class="same-container py-6 px-8 mb-10">
-                                    <p class="text-xl font-normal">Currently viewing</p>
-                                </div>
-                                <a href="#" class="text-xl font-semibold">Buy <img src="images/right-arrow.png" alt="" class="inline-block h-3 w-3 align-baseline"></a>
+
+            <div class="nav-controls">
+                <button class="nav-btn prevBtn nav-btn-light" aria-label="Poprzednie">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+                <button class="nav-btn nextBtn nav-btn-light" aria-label="Następne">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 18l6-6-6-6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="wrapper text-3xl font-medium w-full mb-32">
+            <section id="trigger-zone">
+                <div class="flex flex-col justify-start h-full">
+                    <h1 class="text-[60px] leading-tight font-semibold reveal py-20" style="--d: 0.2s">Introducing the
+                        new Book6 Series</h1>
+                    <img src="images/book6-series.webp" alt="" class="w-fit h-fit">
+                    <div class="compare-models flex justify-center items-center mt-48 gap-10 text-center"
+                        id="compare-models">
+                        <div class="first-column w-[600px]">
+                            <h3 class="py-4">Galaxy Book5 Pro 14" and 16"</h3>
+                            <p class="text-xl font-normal py-2">Strikingly thin and fast so you can work, play, or
+                                create anywhere.</p>
+                            <p class="text-xl font-semibold py-2">From $999</p>
+                            <div class="same-container py-6 px-8 mb-10">
+                                <p class="text-xl font-normal">Currently viewing</p>
                             </div>
-                            <div class="second-column w-[600px]">
-                                <h3 class="py-4">Galaxy Book6 Pro 14" and 16"</h3>
-                                <p class="text-xl font-normal py-2">The most advanced Mac laptops for demanding workflows.</p>
-                                <p class="text-xl font-semibold py-2">From $1299</p>
-                                <div class="button-container py-4 px-4 text-xl mb-10">
-                                    <button class="px-4 py-2 rounded-2xl bg-[var(--apple-blue)] text-white">Learn More</button>
-                                </div>
-                                <a href="#" class="text-xl font-semibold">Buy <img src="images/right-arrow.png" alt="" class="inline-block h-3 w-3 align-baseline"></a>
-                            </div>
+                            <a href="#" class="text-xl font-semibold">Buy <img src="images/right-arrow.png" alt=""
+                                    class="inline-block h-3 w-3 align-baseline"></a>
                         </div>
-                        <div class="flex justify-center items-center">
-                            <span class="h-[1px] w-[65%] bg-gray-400 mt-16 opacity-75"></span>
-                        </div>
-                        <div class="compare-models flex justify-center items-center gap-10 text-center mt-16">
-                            <div class="first-column w-[600px]">
-                                <p class="text-xl font-normal py-2">Intel 7 258V</p>
-                                <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp" alt="" class="h-20 w-23 block align-baseline mx-auto mt-5">
-                                <p class="text-xl font-normal py-2">Galaxy AI</p>
-                                <p class="text-[14px] font-normal pt-2">Up to</p>
-                                <p class="text-2xl font-semibold">25 hours</p>
-                                <p class="text-[14px] font-normal pb-2">battery life</p>
+                        <div class="second-column w-[600px]">
+                            <h3 class="py-4">Galaxy Book6 Pro 14" and 16"</h3>
+                            <p class="text-xl font-normal py-2">The most advanced Mac laptops for demanding workflows.
+                            </p>
+                            <p class="text-xl font-semibold py-2">From $1299</p>
+                            <div class="button-container py-4 px-4 text-xl mb-10">
+                                <button class="px-4 py-2 rounded-2xl bg-[var(--apple-blue)] text-white">Learn
+                                    More</button>
                             </div>
-                            <div class="second-column w-[600px]">
-                                <p class="text-xl font-normal py-2">Intel X7 368H</p>
-                                <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp" alt="" class="h-20 w-23 block align-baseline mx-auto mt-5">
-                                <p class="text-xl font-normal py-2">Galaxy AI</p>
-                                <p class="text-[14px] font-normal pt-2">Up to</p>
-                                <p class="text-2xl font-semibold">30 hours</p>
-                                <p class="text-[14px] font-normal pb-2">battery life</p>
-                            </div>
+                            <a href="#" class="text-xl font-semibold">Buy <img src="images/right-arrow.png" alt=""
+                                    class="inline-block h-3 w-3 align-baseline"></a>
                         </div>
                     </div>
-                </section>
-                <a href="#compare-models">
+                    <div class="flex justify-center items-center">
+                        <span class="h-[1px] w-[65%] bg-gray-400 mt-16 opacity-75"></span>
+                    </div>
+                    <div class="compare-models flex justify-center items-center gap-10 text-center mt-16">
+                        <div class="first-column w-[600px]">
+                            <p class="text-xl font-normal py-2">Intel 7 258V</p>
+                            <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp"
+                                alt="" class="h-20 w-23 block align-baseline mx-auto mt-5">
+                            <p class="text-xl font-normal py-2">Galaxy AI</p>
+                            <p class="text-[14px] font-normal pt-2">Up to</p>
+                            <p class="text-2xl font-semibold">25 hours</p>
+                            <p class="text-[14px] font-normal pb-2">battery life</p>
+                        </div>
+                        <div class="second-column w-[600px]">
+                            <p class="text-xl font-normal py-2">Intel X7 368H</p>
+                            <img src="images/AMk1eXIzzjYQwO3lBV61vl7c819FzRa89v0MlUZRrlmkPREt0rSJxD7kd2TM3N9M1-jlqRLppXI2fo40tSpVxw.webp"
+                                alt="" class="h-20 w-23 block align-baseline mx-auto mt-5">
+                            <p class="text-xl font-normal py-2">Galaxy AI</p>
+                            <p class="text-[14px] font-normal pt-2">Up to</p>
+                            <p class="text-2xl font-semibold">30 hours</p>
+                            <p class="text-[14px] font-normal pb-2">battery life</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <a href="#compare-models">
                 <div id="magic-container">
                     <div class="inner-container-layout">
                         <div id="status-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"
-                                stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
                         </div>
                         <div id="expanded-ui-content">
-                            <span class="text-[16px] font-semibold text-gray-900 tracking-tight whitespace-nowrap block">
+                            <span
+                                class="text-[16px] font-semibold text-gray-900 tracking-tight whitespace-nowrap block">
                                 Compare Book5 Pro with Book 6 Pro
                             </span>
                         </div>
                     </div>
                 </div>
-                </a>
+            </a>
+        </div>
+        <div class="flex flex-col w-full bg-[var(--smoked-white)] text-black">
+            <div class="wrapper text-3xl font-medium mb-32 py-20">
+                <div class="w-full mt-auto">
+                    <footer class="bg-[#f5f5f7] text-[#1d1d1f]">
+                        <div class="px-6 fluid-py">
+
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-16 items-start justify-between">
+                                <div class="border-b border-gray-300 md:border-none pb-6 md:pb-0">
+                                    <h3 class="hidden md:block font-bold text-gray-900 mb-6 text-fluid-header uppercase tracking-tight">Navigation</h3>
+                                    <details class="md:hidden group">
+                                        <summary
+                                            class="flex justify-between items-center cursor-pointer font-bold text-gray-900 text-fluid-header py-2">
+                                            Programmer
+                                            <span class="transform transition-transform group-open:rotate-180">
+                                                <i class="fas fa-chevron-down text-sm text-gray-500"></i>
+                                            </span>
+                                        </summary>
+                                        <ul class="mt-4 space-y-4 pl-2">
+                                            <li><a href="#Galaxy-AI" class="text-gray-600 hover:text-black footer-link">About Galaxy AI</a></li>
+                                            <li><a href="#battery-section" class="text-gray-600 hover:text-black footer-link">Premium cell quality</a></li>
+                                            <li><a href="#ports-connectivity" class="text-gray-600 hover:text-black footer-link">Ports and Connectivity</a></li>
+                                            <li><a href="#upgrade-zone" class="text-gray-600 hover:text-black footer-link">Features</a>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                    <ul class="hidden md:block space-y-4">
+                                        <li class="reveal" style="--d: 0.05s"><a href="#Galaxy-AI" class="text-gray-600 hover:text-black footer-link">About Galaxy AI</a></li>
+                                        <li class="reveal" style="--d: 0.1s"><a href="#battery-section" class="text-gray-600 hover:text-black footer-link">Premium cell quality</a></li>
+                                        <li class="reveal" style="--d: 0.15s"><a href="#ports-connectivity" class="text-gray-600 hover:text-black footer-link">Ports and Connectivity</a></li>
+                                        <li class="reveal" style="--d: 0.2s"><a href="#upgrade-zone" class="text-gray-600 hover:text-black footer-link">Features</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="border-b border-gray-300 md:border-none pb-6 md:pb-0">
+                                    <h3
+                                        class="hidden md:block font-bold text-gray-900 mb-6 text-fluid-header uppercase tracking-tight">
+                                        Portfolio</h3>
+                                    <details class="md:hidden group">
+                                        <summary
+                                            class="flex justify-between items-center cursor-pointer font-bold text-gray-900 text-fluid-header py-2">
+                                            Portfolio
+                                            <span class="transform transition-transform group-open:rotate-180">
+                                                <i class="fas fa-chevron-down text-sm text-gray-500"></i>
+                                            </span>
+                                        </summary>
+                                        <ul class="mt-4 space-y-4 pl-2">
+                                            <li><a href="https://github.com/Panpietruszka" class="text-gray-600 hover:text-black footer-link">GitHub Profile</a></li>
+                                            <li><a href="https://linkedin.com" class="text-gray-600 hover:text-black footer-link">LinkedIn</a></li>
+                                            <li><a href="#" class="text-gray-600 hover:text-black footer-link">Live Portfolio</a></li>
+                                        </ul>
+                                    </details>
+                                    <ul class="hidden md:block space-y-4">
+                                        <li class="reveal" style="--d: 0.25s"><a href="https://github.com/Panpietruszka" class="text-gray-600 hover:text-black footer-link">GitHub Profile</a></li>
+                                        <li class="reveal" style="--d: 0.3s"><a href="https://linkedin.com" class="text-gray-600 hover:text-black footer-link">LinkedIn</a></li>
+                                        <li class="reveal" style="--d: 0.35s"><a href="#" class="text-gray-600 hover:text-black footer-link">Live Portfolio</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="border-b border-gray-300 md:border-none pb-6 md:pb-0">
+                                    <h3 class="hidden md:block font-bold text-gray-900 mb-6 text-fluid-header uppercase tracking-tight">Pomoc</h3>
+                                    <details class="md:hidden group">
+                                        <summary class="flex justify-between items-center cursor-pointer font-bold text-gray-900 text-fluid-header py-2">Pomoc
+                                            <span class="transform transition-transform group-open:rotate-180">
+                                                <i class="fas fa-chevron-down text-sm text-gray-500"></i>
+                                            </span>
+                                        </summary>
+                                        <ul class="mt-4 space-y-4 pl-2">
+                                            <li><a href="mailto:twoj-email@gmail.com" class="text-blue-600 hover:text-blue-800 font-medium footer-link">Contact Me</a></li>
+                                            <li><a href="#" class="text-gray-600 hover:text-black footer-link">Help Center</a></li>
+                                        </ul>
+                                    </details>
+                                    <ul class="hidden md:block space-y-4">
+                                        <li class="reveal" style="--d: 0.4s"><a href="mailto:twoj-email@gmail.com" class="text-blue-600 hover:text-blue-800 font-bold text-fluid-header footer-link">Contact Me</a></li>
+                                        <li class="reveal" style="--d: 0.45s"><a href="#" class="text-gray-600 hover:text-black footer-link">Help Center</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
             </div>
+        </div>
     </div>
-
-    <footer>
-        
-    </footer>
-<script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const lastScrollY = sessionStorage.getItem('lastScrollPos') || 0;
-
-        // Elementy
-        const video = document.getElementById('scroll-video');
-        const videoContainer = document.getElementById('video-container');
-        const zoomSection = document.getElementById('zoom-section');
-        const videoCheckbox = document.getElementById('video-checkbox');
-        const body = document.body;
-        const wrapper = document.querySelector('#animation-wrapper');
-
-        let hasBeenPlayed = localStorage.getItem('videoWatched') === 'true';
-        let videoStarted = false;
-
-        // --- TWOJA LOGIKA PRZYCISKU/CHECKBOXA ---
-        if (videoCheckbox) {
-            videoCheckbox.addEventListener('change', () => {
-                if (videoCheckbox.checked) {
-                    if (video) video.pause();
-                    body.classList.remove('lock-scroll'); // Ręczne odblokowanie
-                } else {
-                    if (video) {
-                        video.play().catch(() => { });
-                        if (!hasBeenPlayed) body.classList.add('lock-scroll');
-                    }
-                }
-            });
-        }
-        // Przewinięcie na samą górę strony
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-
-        const sekcja = document.querySelector('#compare-models');
-        sekcja.scrollIntoView({
-            behavior: 'smooth'
-        });
-
-        // --- GŁÓWNA INICJALIZACJA ---
-        window.addEventListener('load', () => {
-            initGalleries();
-
-            if (document.getElementById('animation-trigger')) {
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#animation-trigger",
-                        start: "top top",
-                        end: "+=300%",
-                        scrub: 1,
-                        pin: true,
-                        anticipatePin: 1
-                    }
-                })
-                    .to("#text-bundle", { y: "0", opacity: 1, duration: 2 })
-                    .to("#text-bundle", { y: "-100vh", opacity: 0, duration: 2 })
-                    .to("#main-img", { scale: 0.85, borderRadius: "40px", duration: 1.5 });
-            }
-
-            ScrollTrigger.refresh();
-            if (lastScrollY > 0) window.scrollTo(0, lastScrollY);
-
-            body.classList.add('loaded');
-
-            // Sprawdzenie stanu początkowego
-            if (zoomSection) {
-                const rect = zoomSection.getBoundingClientRect();
-                if (rect.bottom <= 0 || hasBeenPlayed) {
-                    hasBeenPlayed = true;
-                    videoStarted = true;
-                    body.classList.remove('lock-scroll');
-                    if (video) {
-                        video.muted = true;
-                        video.loop = true;
-                        video.play().catch(() => { });
-                    }
-                }
-            }
-        });
-
-        // --- TWOJA LOGIKA ZOOMU I BLOKADY SCROLLA ---
-        window.addEventListener('scroll', () => {
-            sessionStorage.setItem('lastScrollPos', window.scrollY);
-
-            if (zoomSection) {
-                const rect = zoomSection.getBoundingClientRect();
-                const windowH = window.innerHeight;
-
-                if (rect.top < windowH && rect.bottom > 0) {
-                    let progress = Math.min(Math.max((windowH - rect.top) / windowH, 0), 1);
-
-                    if (videoContainer) {
-                        videoContainer.style.width = `${60 + (40 * progress)}%`;
-                        videoContainer.style.height = `${60 + (40 * progress)}vh`;
-                        videoContainer.style.borderRadius = `${60 * (1 - progress)}px`;
-                    }
-
-                    // AKTYWACJA BLOKADY
-                    if (progress >= 1 && !videoStarted && !hasBeenPlayed) {
-                        videoStarted = true;
-                        body.classList.add('lock-scroll'); // TWOJA BLOKADA
-
-                        if (videoCheckbox) videoCheckbox.checked = false;
-
-                        if (video) {
-                            video.muted = false;
-                            video.onended = () => {
-                                hasBeenPlayed = true;
-                                localStorage.setItem('videoWatched', 'true');
-                                body.classList.remove('lock-scroll'); // ODBLOKOWANIE
-                                if (videoCheckbox) videoCheckbox.checked = true;
-                                window.scrollBy({ top: 150, behavior: 'smooth' });
-                            };
-                            video.play().catch(() => { });
-                        }
-                    }
-                }
-            }
-        });
-
-        // --- POZOSTAŁE FUNKCJE I OBSERWATORY ---
-        function initGalleries() {
-            document.querySelectorAll('.gallery-container').forEach(gallery => {
-                const wrapper = gallery.querySelector('.imageWrapper');
-                const prevBtn = gallery.querySelector('.prevBtn');
-                const nextBtn = gallery.querySelector('.nextBtn');
-
-                if (!wrapper || !prevBtn || !nextBtn) return;
-
-                const updateButtons = () => {
-                    const scrollLeft = Math.ceil(wrapper.scrollLeft);
-                    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-
-                    // Logika lewej strzałki
-                    if (scrollLeft > 5) {
-                        prevBtn.style.opacity = "1";
-                        prevBtn.style.pointerEvents = "auto";
-                        prevBtn.style.cursor = "pointer";
-                    } else {
-                        prevBtn.style.opacity = "0.3";
-                        // Zmieniamy kursor na 'not-allowed' zamiast blokować pointer-events, 
-                        // aby kursor był widoczny po najechaniu
-                        prevBtn.style.pointerEvents = "auto";
-                        prevBtn.style.cursor = "not-allowed";
-                    }
-
-                    // Logika prawej strzałki
-                    if (scrollLeft >= maxScroll - 5) {
-                        nextBtn.style.opacity = "0.3";
-                        nextBtn.style.pointerEvents = "auto";
-                        nextBtn.style.cursor = "not-allowed";
-                    } else {
-                        nextBtn.style.opacity = "1";
-                        nextBtn.style.pointerEvents = "auto";
-                        nextBtn.style.cursor = "pointer";
-                    }
-                };
-
-                nextBtn.onclick = () => {
-                    // Sprawdzamy czy kursor nie jest 'not-allowed' przed wykonaniem scrolla
-                    if (nextBtn.style.cursor === "not-allowed") return;
-
-                    wrapper.scrollBy({
-                        left: 600,
-                        behavior: 'smooth'
-                    });
-                    setTimeout(updateButtons, 500);
-                };
-
-                prevBtn.onclick = () => {
-                    if (prevBtn.style.cursor === "not-allowed") return;
-
-                    wrapper.scrollBy({
-                        left: -600,
-                        behavior: 'smooth'
-                    });
-                    setTimeout(updateButtons, 500);
-                };
-
-                wrapper.addEventListener('scroll', updateButtons);
-                updateButtons();
-            });
-        }
-
-        // Reveal Observer
-        const revealItems = document.querySelectorAll('.reveal');
-
-        const revealObs = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Jeśli to kontener galerii, aktywuj wszystkie reveal w środku
-                    if (entry.target.classList.contains('gallery-container')) {
-                        const innerReveals = entry.target.querySelectorAll('.reveal');
-                        innerReveals.forEach(item => item.classList.add('active'));
-                        revealObs.unobserve(entry.target);
-                    } else {
-                        // Standardowe zachowanie dla pojedynczych elementów
-                        entry.target.classList.add('active');
-                        revealObs.unobserve(entry.target);
-                    }
-                }
-            });
-        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
-
-        revealItems.forEach(item => {
-            // Sprawdź, czy element jest wewnątrz galerii
-            const parentGallery = item.closest('.gallery-container');
-
-            if (parentGallery) {
-                // Jeśli jest w galerii, obserwujemy całą galerię zamiast pojedynczego obrazka
-                revealObs.observe(parentGallery);
-            } else {
-                // Jeśli jest luzem na stronie, sprawdź pozycję startową
-                if (item.getBoundingClientRect().top < window.innerHeight * 0.1) {
-                    item.classList.add('active');
-                } else {
-                    revealObs.observe(item);
-                }
-            }
-        });
-
-        // Wrapper Observer
-        if (wrapper) {
-            const wrapObs = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        wrapper.classList.add('is-visible');
-                    } else if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) {
-                        wrapper.classList.remove('is-visible');
-                    }
-                });
-            }, { rootMargin: "0px 0px -40% 0px" });
-            wrapObs.observe(wrapper);
-        }
-
-        // Samsung Observer
-        const samsungSec = document.getElementById('samsung-reveal-section');
-        if (samsungSec) {
-            new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
-            }, { threshold: 0.5 }).observe(samsungSec);
-        }
-
-        const container = document.getElementById('magic-container');
-        const icon = document.getElementById('status-icon');
-        const content = document.getElementById('expanded-ui-content');
-        const zone = document.getElementById('trigger-zone');
-
-        const CONFIG = {
-            margin: 175,
-            targetBottom: 140,
-            fullWidth: 340,
-            bubbleSize: 56
-        };
-
-        const STATE = {
-            hasTriggered: false,
-            isLatched: false,
-            introTimeline: null,
-            isFullyHidden: true
-        };
-
-        function getSafeClampedBottom(requestedBottom) {
-            const zoneRect = zone.getBoundingClientRect();
-            const winH = window.innerHeight;
-            const conH = container.offsetHeight;
-            const bottomLimit = winH - zoneRect.bottom + CONFIG.margin;
-            const topLimit = winH - zoneRect.top - conH - CONFIG.margin;
-            return Math.min(Math.max(requestedBottom, bottomLimit), topLimit);
-        }
-
-        function handlePositionRefresh() {
-            if (STATE.hasTriggered && !STATE.isLatched) return;
-
-            const safeBottom = getSafeClampedBottom(CONFIG.targetBottom);
-            gsap.set(container, { bottom: safeBottom });
-
-            const zoneRect = zone.getBoundingClientRect();
-            if (zoneRect.bottom < 0 || zoneRect.top > window.innerHeight) {
-                if (!STATE.isFullyHidden) {
-                    gsap.to(container, { opacity: 0, scale: 0.8, duration: 0.4, ease: "power2.inOut" });
-                    STATE.isFullyHidden = true;
-                }
-            } else {
-                if (STATE.isFullyHidden && STATE.isLatched) {
-                    gsap.to(container, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" });
-                    STATE.isFullyHidden = false;
-                }
-            }
-        }
-
-        function initiateSacredSequence() {
-            if (STATE.hasTriggered) return;
-            STATE.hasTriggered = true;
-            STATE.isFullyHidden = false;
-
-            gsap.killTweensOf([container, icon, content]);
-
-            // PUNKT ZERO - Bardziej "skoncentrowany" start
-            gsap.set(container, {
-                opacity: 0,
-                bottom: -100,
-                width: CONFIG.bubbleSize,
-                scaleX: 0.5,
-                scaleY: 1.5,
-                filter: "blur(10px)"
-            });
-
-            STATE.introTimeline = gsap.timeline({
-                onComplete: () => {
-                    STATE.isLatched = true;
-                    handlePositionRefresh();
-                },
-                onReverseComplete: () => {
-                    STATE.hasTriggered = false;
-                    STATE.isLatched = false;
-                    STATE.isFullyHidden = true;
-                    gsap.set(container, { opacity: 0 });
-                }
-            });
-
-            STATE.introTimeline
-                // 1. WYSTRZAŁ (The Pop)
-                .to(container, {
-                    opacity: 1,
-                    bottom: 200,
-                    scaleX: 1.1,
-                    scaleY: 0.9,
-                    filter: "blur(0px)",
-                    duration: 0.7,
-                    ease: "expo.out"
-                })
-                // 2. ROZSZERZENIE (The Expansion) z fizyką galarety
-                .to(container, {
-                    width: CONFIG.fullWidth,
-                    bottom: CONFIG.targetBottom,
-                    scaleX: 1,
-                    scaleY: 1,
-                    duration: 1.4,
-                    ease: "elastic.out(1, 0.6)"
-                }, 0.4)
-                // 3. IKONA - płynne przesunięcie na bok
-                .to(icon, {
-                    left: "calc(100% - 32px)",
-                    scale: 0.8,
-                    duration: 1.2,
-                    ease: "elastic.out(1, 0.7)"
-                }, 0.5)
-                // 4. TREŚĆ - Fade + Slide + Unblur
-                .to(content, {
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    x: 0,
-                    duration: 0.8,
-                    ease: "power2.out"
-                }, 0.7)
-                // 5. EFEKT POŁYSKU (Shine)
-                .to("#magic-container", {
-                    onStart: () => {
-                        gsap.fromTo("#magic-container",
-                            { "--shine-pos": "-150%" },
-                            { keyframes: [{ "--shine-pos": "150%" }], duration: 1 }
-                        );
-                    }
-                }, 0.6);
-
-            // Dodajemy dynamiczny "oddech" (Idle)
-            STATE.introTimeline.add(() => {
-                if (!STATE.introTimeline.reversed()) {
-                    const idleTl = gsap.timeline({ repeat: -1, yoyo: true });
-                    idleTl.to(container, {
-                        y: -8,
-                        duration: 2.5,
-                        ease: "sine.inOut"
-                    });
-                    idleTl.to(container, {
-                        boxShadow: "0 40px 70px -15px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.6)",
-                        duration: 2.5,
-                        ease: "sine.inOut"
-                    }, 0);
-                }
-            });
-        }
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (!STATE.hasTriggered) initiateSacredSequence();
-                    else if (STATE.introTimeline?.reversed()) STATE.introTimeline.play();
-                } else {
-                    if (STATE.hasTriggered && !STATE.isLatched) STATE.introTimeline.reverse();
-                }
-            });
-        }, { threshold: 0.001 });
-
-        observer.observe(zone);
-        window.addEventListener('scroll', handlePositionRefresh, { passive: true });
-        window.addEventListener('resize', handlePositionRefresh);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const initialRect = zone.getBoundingClientRect();
-            if (initialRect.top < window.innerHeight && initialRect.bottom > 0) {
-                initiateSacredSequence();
-            }
-        });
-    });
-</script>
+<script src="script.js"></script>
 </body>
 
 </html>
