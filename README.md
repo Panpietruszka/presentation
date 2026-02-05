@@ -6,7 +6,7 @@
 
 Ekskluzywna, interaktywna witryna typu "Landing Page" prezentująca możliwości Samsung Galaxy Book5 Pro. Projekt koncentruje się na dostarczeniu doświadczenia klasy Premium poprzez zaawansowane animacje oraz nowoczesny design inspirowany największymi markami technologicznymi.
 
-🔗 **Live Demo:** [Twoj-Link-Z-GitHub-Pag](https://panpietruszka.github.io/presentation/index.html)
+🔗 **Live Demo:** [Galaxy-Book5-Pro](https://panpietruszka.github.io/presentation/index.html)
 
 ---
 
